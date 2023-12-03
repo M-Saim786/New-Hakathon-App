@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "199722486764",
+    "project_id": "mini-hakathon-f16b3",
+    "storage_bucket": "mini-hakathon-f16b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:199722486764:android:3b601751a13527b0734ec9",
+        "android_client_info": {
+          "package_name": "com.minihakathon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "199722486764-16sdrvh8eaa2bta0tdnrn9hstulpgr66.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.minihakathon",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "199722486764-paae0jedvochhv9tcoqgjpk3h1mc1853.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAh_czQE6AgG9PJrDmBAFn4D5bqYFzqlcE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "199722486764-2t94ifdsvu98u8fud4u36sq37c65eum1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
