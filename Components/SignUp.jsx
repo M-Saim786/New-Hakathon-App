@@ -29,7 +29,8 @@ function SignUp({ navigation }) {
                     Name: Name,
                     Email: Email,
                     Password: Password,
-                    key: res.user.uid
+                    key: res.user.uid,
+                    role: "user"
                 })
                 Snackbar.show({
                     text: 'SignUp Success..!',
@@ -42,11 +43,6 @@ function SignUp({ navigation }) {
                 });
                 setloading(false)
                 LoginCheck()
-                // if (res) {
-                //     navigation.navigate("Main")
-                // }
-
-
             }).catch((err) => {
                 console.log(err.message)
                 setloading(false)
@@ -64,6 +60,17 @@ function SignUp({ navigation }) {
                 else if (err.message == "[auth/weak-password] The given password is invalid. [ Password should be at least 6 characters ]") {
                     Snackbar.show({
                         text: "Password should be at least 6 characters",
+                        duration: Snackbar.LENGTH_SHORT,
+                        action: {
+                            text: 'Ok',
+                            textColor: 'green',
+                            onPress: () => { /* Do something. */ },
+                        },
+                    });
+                }
+                else if (err.message == "[auth/email-already-in-use] The email address is already in use by another account.") {
+                    Snackbar.show({
+                        text: "The email address is already in use by another account.",
                         duration: Snackbar.LENGTH_SHORT,
                         action: {
                             text: 'Ok',

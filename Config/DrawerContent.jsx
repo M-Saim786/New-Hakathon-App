@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react'
 import { View, StyleSheet, Image, ImageBackground } from 'react-native'
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
-import Icon2 from 'react-native-vector-icons/FontAwesome5'
-import Icon1 from 'react-native-vector-icons/AntDesign'
+// import Icon2 from 'react-native-vector-icons/FontAwesome5'
+// import Icon1 from 'react-native-vector-icons/AntDesign'
 // import { DrawerContentScrollView } from '@react-navigation/drawer'
 import firestore from '@react-native-firebase/firestore';
 import {
@@ -10,13 +10,10 @@ import {
     Avatar,
     Title,
     Caption,
-    Paragraph,
     Drawer,
     Text,
-    TouchableRipple,
-    Switch
 } from 'react-native-paper';
-import { transparent } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
+import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 const DrawerContentMain = [
     {
@@ -74,6 +71,9 @@ function DrawerContent(props) {
     }
     const Logout = async () => {
         // console.log("logout")
+        await auth()
+            .signOut()
+            .then(() => console.log('User signed out!'));
         await AsyncStorage.removeItem("userId")
         // props.navigation.navigate("login")
         LoginCheck()
@@ -88,21 +88,18 @@ function DrawerContent(props) {
     const getData = async () => {
         const userId = await AsyncStorage.getItem("userId")
         // setUserId(userId)
-        // console.log(userId)
-        // let ID =JSON.parse(userId)
-        // const userDocument = 
-        await firestore().collection('User').doc((userId)).get().then((res) => {
-            console.log("userDATA", res?._data?.Email)
+        await firestore().collection('User').doc((userId)).get().then(async (res) => {
+            await AsyncStorage.setItem("role", res?._data?.role)
+            console.log("userDATA", res?._data?.role)
             setProfile(res?._data)
             setProfImg(res?._data?.Img)
             // setName(res?._data?.Name)
             // setEmail(res?._data?.Email)
             // setPassword(res?._data?.Password)
-            console.log("Profile", Profile)
+            // console.log("Profile", Profile)
         }).catch((err) => {
             console.log(err)
         })
-
     }
 
     return (

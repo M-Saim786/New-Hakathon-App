@@ -20,15 +20,9 @@ function Login({ navigation }) {
     const [Password, setPassword] = useState("")
     const [secureText, setsecureText] = useState(true)
     const [loading, setloading] = useState(false)
-    // // const gotoHome = () => {
-    // //     navigation.replace("Main")
-    // // }
-    // const gotoSignUp = () => {
-    //     // 
-    // }
 
     const LoginApp = async () => {
-        console.log(Email, Password)
+        // console.log(Email, Password)
         console.log("Login")
         if (Email !== "" && Password !== "") {
             setloading(true)
@@ -43,21 +37,10 @@ function Login({ navigation }) {
                         onPress: () => { /* Do something. */ },
                     },
                 });
-                // if (res) {
-                // }
-
+                // console.log("user", JSON.stringify(res.user))
                 await AsyncStorage.setItem('userId', res.user.uid);
                 setloading(false)
                 LoginCheck()
-                // setTimeout(async () => {
-
-                //     // navigation.navigate("Main")
-                //     // const value = await AsyncStorage.getItem('userId');
-                //     // if (value !== null) {
-                //     //     // We have data!!
-                //     //     console.log("value:", value);
-                //     // }
-                // }, 2000);
 
             }).catch((err) => {
                 setloading(false)
@@ -108,19 +91,6 @@ function Login({ navigation }) {
                 },
             });
         }
-        // let key = firestore().collection("USER").doc().id;
-        // let obj = {
-        //     Email: Email,
-        //     Password: Password,
-        //     key: key
-        // }
-        // firestore().collection("USER").doc(key).set(obj)
-        //     .then((data) => {
-        //         console.log("user add")
-        //     })
-        //     .catch((err) => {
-        //         console.log(err)
-        //     })
 
     }
 
@@ -162,17 +132,51 @@ function Login({ navigation }) {
         } catch (error) {
             console.log("error", error)
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+                Snackbar.show({
+                    text: "SignIn cancelled by user...",
+                    duration: Snackbar.LENGTH_SHORT,
+                    action: {
+                        text: 'Ok',
+                        textColor: 'green',
+                        onPress: () => { /* Do something. */ },
+                    },
+                });
                 // user cancelled the login flow
             } else if (error.code === statusCodes.IN_PROGRESS) {
+                Snackbar.show({
+                    text: "SignIn already in progress...",
+                    duration: Snackbar.LENGTH_SHORT,
+                    action: {
+                        text: 'Ok',
+                        textColor: 'green',
+                        onPress: () => { /* Do something. */ },
+                    },
+                });
                 // operation (e.g. sign in) is in progress already
             } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+                Snackbar.show({
+                    text: "Google play services outdated or not available",
+                    duration: Snackbar.LENGTH_SHORT,
+                    action: {
+                        text: 'Ok',
+                        textColor: 'green',
+                        onPress: () => { /* Do something. */ },
+                    },
+                });
                 // play services not available or outdated
             } else {
+                Snackbar.show({
+                    text: error.message,
+                    duration: Snackbar.LENGTH_SHORT,
+                    action: {
+                        text: 'Ok',
+                        textColor: 'green',
+                        onPress: () => { /* Do something. */ },
+                    },
+                });
                 // some other error happened
             }
         }
-
-
     }
 
     return (

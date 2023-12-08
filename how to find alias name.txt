@@ -1,0 +1,10 @@
+how to find keysotre Alias 
+keytool -list -v -keystore "E:\Hakathon App\MiniHakathon\android\app\my-key.keystore"
+>>  //run this command
+
+
+enter passowrd =>123456
+
+this will show alias name
+
+
