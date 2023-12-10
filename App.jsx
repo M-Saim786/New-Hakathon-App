@@ -5,6 +5,9 @@ import AppNavigator from './Config/AppNavigator'
 
 function App() {
   return (<AppNavigator />)
+  // return(
+    
+  // )
 }
 
 export default App

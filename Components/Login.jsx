@@ -3,14 +3,14 @@ import { Image, ImageBackground, Pressable, StyleSheet, Text, View, TouchableOpa
 import { Button, } from 'react-native-paper'
 import { TextInput } from 'react-native-paper';
 import Snackbar from 'react-native-snackbar';
-import firestore from '@react-native-firebase/firestore';
+// import firestore from '@react-native-firebase/firestore';
 // import database from '@react-native-firebase/database';
 import auth from "@react-native-firebase/auth"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 // import {  } from 'react-native-gesture-handler';
 import {
     GoogleSignin,
-    GoogleSigninButton,
+    // GoogleSigninButton,
     statusCodes,
 } from '@react-native-google-signin/google-signin';
 function Login({ navigation }) {
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     heading: {
         fontSize: 25,
         textAlign: "center",
-        // fontFamily: "Quicksand-VariableFont_wght",
+        fontFamily: "Quicksand-Medium",
         // fontWeight: "bold"
     },
     mainDiv: {

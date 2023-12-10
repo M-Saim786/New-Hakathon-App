@@ -5953,7 +5953,7 @@
   "resolved" "https://registry.npmjs.org/react-native-snackbar/-/react-native-snackbar-2.6.2.tgz"
   "version" "2.6.2"
 
-"react-native-svg@*":
+"react-native-svg@*", "react-native-svg@^14.1.0":
   "integrity" "sha512-HeseElmEk+AXGwFZl3h56s0LtYD9HyGdrpg8yd9QM26X+d7kjETrRQ9vCjtxuT5dCZEIQ5uggU1dQhzasnsCWA=="
   "resolved" "https://registry.npmjs.org/react-native-svg/-/react-native-svg-14.1.0.tgz"
   "version" "14.1.0"

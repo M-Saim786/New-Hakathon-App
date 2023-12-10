@@ -68,15 +68,15 @@ function Profile() {
         const reference = storage().ref('Images/' + new Date().getTime() + '.jpg');
         setShowProgress(true)
         try {
-            // Snackbar.show({
-            //     text: 'Uploading Image..!',
-            //     duration: 5000,
-            //     action: {
-            //         text: 'Ok',
-            //         textColor: 'green',
-            //         onPress: () => { /* Do something. */ },
-            //     },
-            // })
+            Snackbar.show({
+                text: 'Uploading Image..!',
+                duration: Snackbar.LENGTH_SHORT,
+                action: {
+                    text: 'Ok',
+                    textColor: 'green',
+                    onPress: () => { /* Do something. */ },
+                },
+            })
             const uploadTask = reference.putFile(imageurl);
             uploadTask.on('state_changed',
                 (snapshot) => {
@@ -197,7 +197,7 @@ function Profile() {
         }
     }
     const screenWidth = Dimensions.get("window").width
-    console.log(screenWidth)
+    // console.log(screenWidth)
 
     return (
         <ScrollView>
