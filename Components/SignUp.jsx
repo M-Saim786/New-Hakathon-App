@@ -6,6 +6,7 @@ import auth from "@react-native-firebase/auth"
 import firestore from "@react-native-firebase/firestore"
 import Snackbar from 'react-native-snackbar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GoogleSignin, statusCodes, } from '@react-native-google-signin/google-signin';
 // import { AsyncStorage } from "react-native"
 function SignUp({ navigation }) {
 
@@ -117,11 +118,84 @@ function SignUp({ navigation }) {
             navigation.navigate("signUp")
         }
     }
+    const GoogleRegister = async () => {
+        console.log("google")
+
+        GoogleSignin.configure({
+            webClientId: '199722486764-paae0jedvochhv9tcoqgjpk3h1mc1853.apps.googleusercontent.com',
+            offlineAccess: true,
+            hostedDomain: '', // specifies a hosted domain restriction
+            forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
+            accountName: '', // [Android] specifies an account name on the device that should be used
+            googleServicePlistPath: '',
+            openIdRealm: '',
+            profileImageSize: 120,
+        });
+        try {
+            await GoogleSignin.hasPlayServices();
+            const userInfo = await GoogleSignin.signIn();
+            const { idToken } = await GoogleSignin.signIn();
+            console.log("userInfo", userInfo)
+            const googleCredentials = auth.GoogleAuthProvider.credential(idToken);
+            await auth().signInWithCredential(googleCredentials);
+            navigation.navigate("Main")
+            return userInfo;
+
+        } catch (error) {
+            console.log("error", error)
+            console.log("errorCode", error.code)
+            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+                Snackbar.show({
+                    text: "SignIn cancelled by user...",
+                    duration: Snackbar.LENGTH_SHORT,
+                    action: {
+                        text: 'Ok',
+                        textColor: 'green',
+                        onPress: () => { /* Do something. */ },
+                    },
+                });
+                // user cancelled the login flow
+            } else if (error.code === statusCodes.IN_PROGRESS) {
+                Snackbar.show({
+                    text: "SignIn already in progress...",
+                    duration: Snackbar.LENGTH_SHORT,
+                    action: {
+                        text: 'Ok',
+                        textColor: 'green',
+                        onPress: () => { /* Do something. */ },
+                    },
+                });
+                // operation (e.g. sign in) is in progress already
+            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+                Snackbar.show({
+                    text: "Google play services outdated or not available",
+                    duration: Snackbar.LENGTH_SHORT,
+                    action: {
+                        text: 'Ok',
+                        textColor: 'green',
+                        onPress: () => { /* Do something. */ },
+                    },
+                });
+                // play services not available or outdated
+            } else {
+                Snackbar.show({
+                    text: error.message,
+                    duration: Snackbar.LENGTH_SHORT,
+                    action: {
+                        text: 'Ok',
+                        textColor: 'green',
+                        onPress: () => { /* Do something. */ },
+                    },
+                });
+                // some other error happened
+            }
+        }
+    }
+
     return (
         <ImageBackground source={require("../assets/Images/SignUp.png")} style={{ width: `100%`, height: `100%`, }} >
             {/* <ImageBackground source={require("../assets/Images/signUpImg.png")} style={{ width: `100%`, height: `100%`, }} > */}
 
-            {/* <Image source={require("./rm222-mind-20.jpg")} style={{ width: `100%`, height: `100%` }} /> */}
             <View style={styles.loginDiv}>
                 <View style={styles.innerDiv}>
                     <View>
@@ -164,7 +238,7 @@ function SignUp({ navigation }) {
                     </View>
 
                     <View style={styles.otherLogin}>
-                        <Pressable>
+                        <Pressable onPress={GoogleRegister}>
                             <Image source={require("../assets/Images/Google.png")} style={styles.otherLoginImg} />
                         </Pressable>
                         <Pressable>
@@ -176,13 +250,16 @@ function SignUp({ navigation }) {
                     </View>
 
                     <View style={styles.signUpHere}>
-                        <Text style={{ marginRight: 10 }}>
+                        <Text style={{ marginRight: 10, fontFamily: "Quicksand-Medium" }}>
                             Don't have account
                         </Text>
                         <Pressable
                             onPress={() => navigation.navigate("login")}
                         >
-                            <Text style={{ color: "#BC69E2", fontWeight: "bold" }}>
+                            <Text style={{
+                                color: "#BC69E2",
+                                fontFamily: "Quicksand-Bold"
+                            }}>
                                 Login here
                             </Text>
                         </Pressable>
@@ -207,9 +284,6 @@ function SignUp({ navigation }) {
 export default SignUp
 
 const styles = StyleSheet.create({
-    // mainPage: {
-    //     backgroundImage: `${uri("./bgImg.jpg")}`
-    // },
     loginDiv: {
         padding: 5,
         display: "flex",
@@ -224,16 +298,12 @@ const styles = StyleSheet.create({
         // borderWidth: 1,
         borderTopEndRadius: 20,
         borderBottomLeftRadius: 20,
-        height: `70%`,
-        // boxShadow: `rgba(99, 99, 99, 0.2) 0px 2px 8px 0px`,
-        // backgroundColor: "white",
-        // zIndex:`-1px`
-        // backgroundColor: "#ebc3d9"
+        height: `80%`,
     },
     heading: {
         fontSize: 25,
         textAlign: "center",
-        fontFamily: "Outfit"
+        fontFamily: "Quicksand-Medium",
     },
     mainDiv: {
         marginTop: `20%`

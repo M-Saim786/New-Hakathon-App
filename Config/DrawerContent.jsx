@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react'
 import { View, StyleSheet, Image, ImageBackground } from 'react-native'
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
-// import Icon2 from 'react-native-vector-icons/FontAwesome5'
-// import Icon1 from 'react-native-vector-icons/AntDesign'
-// import { DrawerContentScrollView } from '@react-navigation/drawer'
 import firestore from '@react-native-firebase/firestore';
 import {
     useTheme,
@@ -82,21 +79,16 @@ function DrawerContent(props) {
     const [Profile, setProfile] = React.useState([])
     const [ProfImg, setProfImg] = React.useState(null)
     useEffect(() => {
-        //   const dbref = 
         getData()
     }, [])
+
     const getData = async () => {
         const userId = await AsyncStorage.getItem("userId")
-        // setUserId(userId)
         await firestore().collection('User').doc((userId)).get().then(async (res) => {
             await AsyncStorage.setItem("role", res?._data?.role)
             console.log("userDATA", res?._data?.role)
             setProfile(res?._data)
             setProfImg(res?._data?.Img)
-            // setName(res?._data?.Name)
-            // setEmail(res?._data?.Email)
-            // setPassword(res?._data?.Password)
-            // console.log("Profile", Profile)
         }).catch((err) => {
             console.log(err)
         })
@@ -123,15 +115,12 @@ function DrawerContent(props) {
 
                                     <View style={{ flexDirection: 'row', marginTop: 10 }}>
                                         <View style={{ marginLeft: 15, flexDirection: 'column' }}>
-                                            <Title style={styles.title}>{Profile ? Profile?.Name : "Name"}  </Title>
+                                            <Title style={styles.title}>{Profile ? Profile?.Name : "Name"}</Title>
                                             <Caption style={styles.caption}>{Profile ? Profile?.Email : "Email"}</Caption>
                                         </View>
                                     </View>
-
                                 </View>
-
                             </View>
-
                         </ImageBackground>
                     </View>
 
@@ -139,16 +128,16 @@ function DrawerContent(props) {
                         {
                             DrawerContentMain.map((v, i) => {
                                 return (
-                                    ++i < 5 && <Drawer.Item
+                                    v.title !== "Logout" && <Drawer.Item
                                         key={i}
                                         icon={v.name}
                                         label={v.title}
                                         onPress={() => { props.navigation.navigate(v.path) }}
+                                        style={styles.DrawerItem}
                                     />
                                 )
                             })
                         }
-
                     </Drawer.Section>
                 </View>
             </DrawerContentScrollView>
@@ -156,44 +145,17 @@ function DrawerContent(props) {
                 {
                     DrawerContentMain.map((v, i) => {
                         return (
-                            ++i > 4 &&
-                            // <Drawer.Item
-                            //  
-                            //     style={{ color: "red" }}
-                            //     icon="gear"
-
-                            // // 
-                            // />
+                            v.title === "Logout" &&
                             <Drawer.Item
-                                // style={{ color: "red" }}
                                 icon="logout"
-                                title={() => (
-                                    <Text style={{ color: "white" }}>
-                                        v.title
-                                    </Text>
-                                )}
-                                // label={() => {
-                                //     return (
-                                //         <Text style={{ color: "white" }}>
-                                //             Llogut
-                                //         </Text>
-                                //     )
-                                // }}
                                 label={v.title}
                                 key={i}
                                 onPress={() => Logout()}
-                                // theme={{ colors: { primary: "green" } }}
-                                style={{
-                                    backgroundColor: "#97c0fc",
-                                    padding: "0px 10px",
-                                    height: 40,
-                                    // color: "white"
-                                }}
+                                style={styles.logoutBtn}
                             />
                         )
                     })
                 }
-
             </Drawer.Section>
         </View>
     )
@@ -215,16 +177,19 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         color: 'white',
-        marginTop: '-5%',
-        marginLeft: '10%'
+        marginTop: '0%',
+        // marginLeft: '10%',
+        fontFamily: "Quicksand-Bold"
     },
     caption: {
         fontSize: 15,
-        fontWeight: 'bold',
+        marginTop: '-3%',
+        // fontWeight: 'bold',
         color: 'white',
-        marginLeft: '10%'
+        marginLeft: '0%',
+        fontFamily: "Quicksand-Bold"
     },
     row: {
         marginTop: 20,
@@ -242,6 +207,7 @@ const styles = StyleSheet.create({
     },
     drawerSection: {
         marginTop: 10,
+        fontFamily: "Quicksand-Bold"
         // borderBlockColor: "black",
         // borderWidth: 1,
         // height: `100%`
@@ -258,4 +224,13 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 16,
     },
+    DrawerItem: {
+        fontFamily: "Quicksand-Bold"
+    },
+    logoutBtn: {
+        borderBlockColor: "#99FFFF",
+        borderWidth: 3,
+        padding: "0px 10px",
+        height: 40,
+    }
 });

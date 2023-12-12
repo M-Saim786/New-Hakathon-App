@@ -8,12 +8,10 @@ const Stack = createNativeStackNavigator()
 function GotoWhere() {
     const [Role, setRole] = useState("")
     useEffect(() => {
-        //   const dbref = 
         getData()
     }, [])
     const getData = async () => {
         const userId = await AsyncStorage.getItem("userId")
-        // setUserId(userId)
         await firestore().collection('User').doc((userId)).get().then(async (res) => {
             await AsyncStorage.setItem("role", res?._data?.role)
             setRole(res?._data?.role)
@@ -25,16 +23,21 @@ function GotoWhere() {
     return (
         <Stack.Navigator>
             {Role == "admin" ?
-                <Stack.Screen
-                    name="Drawer"
-                    component={DrawerNavigation}
-                    options={{ headerShown: false }}
-                /> :
-                <Stack.Screen
-                    name="Bottom"
-                    component={BottomNav}
-                    options={{ headerShown: false }}
-                />
+                <>
+                    <Stack.Screen
+                        name="Drawer"
+                        component={DrawerNavigation}
+                        options={{ headerShown: false }}
+                    />
+                </>
+                :
+                <>
+                    <Stack.Screen
+                        name="Bottom"
+                        component={BottomNav}
+                        options={{ headerShown: false }}
+                    />
+                </>
             }
         </Stack.Navigator>
     )

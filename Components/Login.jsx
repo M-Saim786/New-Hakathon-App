@@ -45,6 +45,7 @@ function Login({ navigation }) {
             }).catch((err) => {
                 setloading(false)
                 console.log(err)
+                console.log(err.message)
                 if (err.message == "[auth/invalid-email] The email address is badly formatted.") {
                     Snackbar.show({
                         text: "Enter correct email format",
@@ -65,6 +66,23 @@ function Login({ navigation }) {
                             textColor: 'green',
                             onPress: () => { /* Do something. */ },
                         },
+                    });
+                }
+                else if (err.message == "[auth/invalid-credential] The supplied auth credential is incorrect, malformed or has expired.") {
+                    Snackbar.show({
+                        text: "The supplied auth credential is incorrect or expired",
+                        duration: Snackbar.LENGTH_SHORT,
+                        action: {
+                            text: 'Ok',
+                            textColor: 'green',
+                            onPress: () => { /* Do something. */ },
+                        },
+                    });
+                }
+                else if (err.message == "[auth/too-many-requests] We have blocked all requests from this device due to unusual activity. Try again later. [ Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. ]") {
+                    Snackbar.show({
+                        text: "We have blocked all requests from this device due to unusual activity. Try again later.",
+                        duration: Snackbar.LENGTH_SHORT,
                     });
                 }
                 else {
@@ -127,6 +145,7 @@ function Login({ navigation }) {
             console.log("userInfo", userInfo)
             const googleCredentials = auth.GoogleAuthProvider.credential(idToken);
             await auth().signInWithCredential(googleCredentials);
+            navigation.navigate("Main")
             return userInfo;
             // setState({ userInfo });
         } catch (error) {
@@ -229,13 +248,18 @@ function Login({ navigation }) {
                     </View>
 
                     <View style={styles.signUpHere}>
-                        <Text style={{ marginRight: 10 }}>
+                        <Text style={{ marginRight: 10, fontFamily: "Quicksand-Medium", color: "black" }}>
                             Don't have account
                         </Text>
                         <Pressable
                             onPress={() => navigation.replace("signUp")}
                         >
-                            <Text style={{ color: "#52CFE0", fontWeight: "bold" }}>
+                            <Text style={{
+                                color: "#52CFE0",
+                                // color: "red",
+                                fontFamily: "Quicksand-Bold",
+                                // fontWeight: "bold"
+                            }}>
                                 Sign Up here
                             </Text>
                         </Pressable>
@@ -246,10 +270,7 @@ function Login({ navigation }) {
                             onPress={LoginApp}
                             contentStyle={{ flexDirection: "row-reverse" }}
                             loading={loading ? true : false}
-                            style={{
-                                marginTop: 25, color: "white", backgroundColor: "#2B29A6",
-                                alignItems: "center"
-                            }}>
+                            style={styles.BtnStyle}>
                             Login
                         </Button>
                     </View>
@@ -263,9 +284,6 @@ export default Login
 
 
 const styles = StyleSheet.create({
-    // mainPage: {
-    //     backgroundImage: `${uri("./bgImg.jpg")}`
-    // },
     loginDiv: {
         padding: 5,
         display: "flex",
@@ -292,6 +310,7 @@ const styles = StyleSheet.create({
         fontSize: 25,
         textAlign: "center",
         fontFamily: "Quicksand-Medium",
+        color: "black"
         // fontWeight: "bold"
     },
     mainDiv: {
@@ -319,6 +338,12 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         // borderBlockColor: "black",
         // borderWidth: 1,
+    }, BtnStyle: {
+        marginTop: 25,
+        color: "white",
+        backgroundColor: "#2B29A6",
+        alignItems: "center",
+        fontFamily: "Quicksand-Medium",
     }
 
 })

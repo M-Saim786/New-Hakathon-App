@@ -8,7 +8,8 @@ import Snackbar from 'react-native-snackbar';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage'
 import * as Progress from 'react-native-progress';
-function Profile() {
+
+function Profile({ setCustomText }) {
     const [Name, setName] = useState("")
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
@@ -303,7 +304,8 @@ const styles = StyleSheet.create({
     heading: {
         textAlign: "center",
         fontSize: 25,
-        margin: 20
+        margin: 20,
+        fontFamily: "Quicksand-Medium"
     },
     mainDiv: {
         padding: 10,

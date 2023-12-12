@@ -17,13 +17,12 @@ import { ActivityIndicator, MD2Colors } from 'react-native-paper'; function Spla
         let data = await AsyncStorage.getItem("user")
         console.log(data)
         if (data == "true") {
-
             navigation.replace("login")
-
         }
         else {
             await AsyncStorage.setItem("user", "true")
-            navigation.replace("appIntro")
+            navigation.replace("login")
+            // navigation.replace("appIntro")
         }
     }
 
