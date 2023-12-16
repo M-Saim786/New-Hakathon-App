@@ -84,7 +84,7 @@ function DrawerContent(props) {
 
     const getData = async () => {
         const userId = await AsyncStorage.getItem("userId")
-        await firestore().collection('User').doc((userId)).get().then(async (res) => {
+        await firestore().collection('Users').doc((userId)).get().then(async (res) => {
             await AsyncStorage.setItem("role", res?._data?.role)
             console.log("userDATA", res?._data?.role)
             setProfile(res?._data)

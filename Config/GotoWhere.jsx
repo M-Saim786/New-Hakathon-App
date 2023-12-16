@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DrawerNavigation from './Drawer';
-import BottomNav from './BottomNav';
+// import BottomNav from './BottomNav';
 import firestore from '@react-native-firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import BottomNav from './CurvedBottom';
 const Stack = createNativeStackNavigator()
 function GotoWhere() {
     const [Role, setRole] = useState("")
@@ -12,12 +13,14 @@ function GotoWhere() {
     }, [])
     const getData = async () => {
         const userId = await AsyncStorage.getItem("userId")
-        await firestore().collection('User').doc((userId)).get().then(async (res) => {
+        await firestore().collection('Users').doc((userId)).get().then(async (res) => {
             await AsyncStorage.setItem("role", res?._data?.role)
             setRole(res?._data?.role)
             console.log("Role", Role)
         }).catch((err) => {
             console.log(err)
+            // cd android 
+
         })
     }
     return (

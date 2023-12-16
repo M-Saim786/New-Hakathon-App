@@ -1,33 +1,47 @@
-import React from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
-    Alert,
     Animated,
+    Button,
     StyleSheet,
     TouchableOpacity,
     View,
+    Text,
+    Dimensions
 } from 'react-native';
 import { CurvedBottomBarExpo } from 'react-native-curved-bottom-bar';
 import Ionicons from "react-native-vector-icons/AntDesign";
-import { NavigationContainer } from '@react-navigation/native';
+import Home from '../Components/Home';
+import About from '../Components/About';
+import Setting from '../Components/Setting';
+import Profile from '../Components/Profile';
+import BottomModal from './BottomModal';
+import RBSheet from "react-native-raw-bottom-sheet";
+import { Modal, RadioButton } from 'react-native-paper';
 
-const Screen1 = () => {
-    return <View style={styles.screen1} />;
-};
+// const Screen1 = () => {
+//     return <View style={styles.screen1} />;
+// };
 
-const Screen2 = () => {
-    return <View style={styles.screen2} />;
-};
+// const Screen2 = () => {
+//     return <View style={styles.screen2} />;
+// };
 
 export default function BottomNav() {
     const _renderIcon = (routeName, selectedTab) => {
         let icon = '';
 
         switch (routeName) {
-            case 'title1':
+            case 'Home':
                 icon = 'home';
                 break;
-            case 'title2':
-                icon = 'home';
+            case 'About':
+                icon = 'profile';
+                break;
+            case 'Profile':
+                icon = 'user';
+                break;
+            case 'Setting':
+                icon = 'setting';
                 break;
         }
 
@@ -50,6 +64,26 @@ export default function BottomNav() {
         );
     };
 
+    const [modalVisible, setmodalVisible] = useState(true)
+    const openModal = () => {
+        console.log("clock");
+        // RBSheet.open()
+        // Open the bottom sheet using your RBSheet reference
+
+    };
+    const width = Dimensions.get("window").width
+    const refRBSheet = useRef();
+    const handleChoice = (text) => {
+        // setVisible(false)
+        if (text == "camera") {
+            // HandleCamera()
+        } else if (text == "gallery") {
+            console.log(text)
+            // OpenGallery()
+        }
+    }
+
+
     return (
         // <NavigationContainer>
         <CurvedBottomBarExpo.Navigator
@@ -65,23 +99,72 @@ export default function BottomNav() {
                 <Animated.View style={styles.btnCircleUp}>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => Alert.alert('Click Action')}
+                        onPress={() => refRBSheet.current.open()}
                     >
-                        <Ionicons name={'apps-sharp'} color="gray" size={25} />
+                        <Ionicons name={'plus'} color="gray" size={25} />
+                        <View
+                        // style={{
+                        //     flex: 1,
+                        //     justifyContent: "center",
+                        //     alignItems: "center",
+                        //     backgroundColor: "#000"
+                        // }}
+                        >
+                            {/* <Button title="OPEN BOTTOM SHEET" /> */}
+                            <RBSheet
+                                ref={refRBSheet}
+                                height={200}
+                                openDuration={250}
+                                closeOnDragDown={true}
+                                closeOnPressMask={true}
+                                customStyles={{
+                                    // container: {
+                                    //     justifyContent: "center",
+                                    //     alignItems: "center"
+                                    // },
+                                    // customStyles={{
+                                    wrapper: {
+                                        backgroundColor: "transparent"
+                                    },
+                                    draggableIcon: {
+                                        backgroundColor: "#000"
+                                    }
+                                    // }}
+                                }}
+                            >
+                                <View>
+                                    <RadioButton.Group onValueChange={handleChoice} >
+                                        <RadioButton.Item label="Donate Now" value="gallery"
+                                        />
+                                        <RadioButton.Item label="Request Help..!" value="camera" />
+                                    </RadioButton.Group>
+                                </View>
+                            </RBSheet>
+                        </View>
                     </TouchableOpacity>
                 </Animated.View>
             )}
             tabBar={renderTabBar}
         >
             <CurvedBottomBarExpo.Screen
-                name="title1"
+                name="Home"
                 position="LEFT"
-                component={() => <Screen1 />}
+                component={() => <Home />}
             />
             <CurvedBottomBarExpo.Screen
-                name="title2"
-                component={() => <Screen2 />}
+                name="About"
+                position="LEFT"
+                component={() => <About />}
+            />
+            <CurvedBottomBarExpo.Screen
+                name="Profile"
                 position="RIGHT"
+                component={() => <Profile />}
+            />
+            <CurvedBottomBarExpo.Screen
+                name="Settings"
+                position="RIGHT"
+                component={() => <Setting />}
             />
         </CurvedBottomBarExpo.Navigator>
         // </NavigationContainer>

@@ -19,7 +19,7 @@ function Profile({ setCustomText }) {
     const [UserId, setUserId] = useState("")
     const [ImgFile, setImgFile] = useState("")
     const [ShowProgress, setShowProgress] = useState(false)
-    const [ProgressVal, setProgressVal] = useState(0)
+    const [ProgressVal, setProgressVal] = useState(10)
     const OpenGallery = async () => {
         console.log("open Gallery")
         const options = {
@@ -113,7 +113,7 @@ function Profile({ setCustomText }) {
         console.log(ImgFile)
         if (Password.length > 5) {
             setloading(true)
-            firestore().collection("User").doc(UserId).update({
+            firestore().collection("Users").doc(UserId).update({
                 Name: Name,
                 Email: Email,
                 Password: Password,
@@ -164,7 +164,7 @@ function Profile({ setCustomText }) {
         setUserId(userId)
         // console.log(userId)
         // let ID =JSON.parse(userId)
-        const userDocument = await firestore().collection('User').doc((userId)).get().then((res) => {
+        const userDocument = await firestore().collection('Users').doc((userId)).get().then((res) => {
             console.log("userDATA", res?._data?.Email)
             setProfile(res?._data)
             setName(res?._data?.Name)

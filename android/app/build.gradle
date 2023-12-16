@@ -124,6 +124,8 @@ dependencies {
     }
 
     debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}")
+       implementation 'com.google.android.gms:play-services-auth:20.7.0'
+
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {

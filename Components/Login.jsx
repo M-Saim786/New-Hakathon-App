@@ -119,7 +119,7 @@ function Login({ navigation }) {
     const LoginCheck = async () => {
         const userId = await AsyncStorage.getItem("userId")
         if (userId) {
-            navigation.navigate("Main")
+            navigation.replace("Main")
         } else {
             navigation.navigate("login")
         }

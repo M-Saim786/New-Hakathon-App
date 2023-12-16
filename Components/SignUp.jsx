@@ -26,7 +26,7 @@ function SignUp({ navigation }) {
                 console.log(res.user.uid)
                 // const key = firestore().collection("User").doc().id
                 await AsyncStorage.setItem("userId", res.user.uid)
-                firestore().collection("User").doc(res.user.uid).set({
+                firestore().collection("Users").doc(res.user.uid).set({
                     Name: Name,
                     Email: Email,
                     Password: Password,
@@ -113,7 +113,7 @@ function SignUp({ navigation }) {
     const LoginCheck = async () => {
         const userId = await AsyncStorage.getItem("userId")
         if (userId) {
-            navigation.navigate("Main")
+            navigation.replace("Main")
         } else {
             navigation.navigate("signUp")
         }

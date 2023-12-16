@@ -47,7 +47,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import AntDesign from "react-native-vector-icons/AntDesign"
 import { Animated, Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity } from 'react-native';
 // import 'react-native-gesture-handler';
-import { useRef } from 'react';
+// import { useRef } from 'react';
 import Home from '../Components/Home';
 import About from '../Components/About';
 import Contact from '../Components/Contact';
@@ -55,43 +55,43 @@ import Profile from '../Components/Profile';
 import Setting from '../Components/Setting';
 
 
-function HomeScreen({ navigation }) {
-    const LoginCheck = async () => {
-        const userId = await AsyncStorage.getItem("userId")
-        if (userId) {
-            navigation.navigate("Main")
-        } else {
-            navigation.navigate("login")
-        }
-    }
-    const Logout = async () => {
-        console.log("logout")
-        await AsyncStorage.removeItem("userId")
-        // props.navigation.navigate("login")
-        LoginCheck()
-    }
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Button
-                onPress={() => Logout()}
-                title="Go to notifications"
-            />
-        </View>
-    );
-}
+// function HomeScreen({ navigation }) {
+//     const LoginCheck = async () => {
+//         const userId = await AsyncStorage.getItem("userId")
+//         if (userId) {
+//             navigation.navigate("Main")
+//         } else {
+//             navigation.navigate("login")
+//         }
+//     }
+//     const Logout = async () => {
+//         console.log("logout")
+//         await AsyncStorage.removeItem("userId")
+//         // props.navigation.navigate("login")
+//         LoginCheck()
+//     }
+//     return (
+//         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//             <Button
+//                 onPress={() => Logout()}
+//                 title="Go to notifications"
+//             />
+//         </View>
+//     );
+// }
 
-function NotificationsScreen({ navigation }) {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Button onPress={() => navigation.goBack()} title="Go back home" />
-        </View>
-    );
-}
+// function NotificationsScreen({ navigation }) {
+//     return (
+//         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+//             <Button onPress={() => navigation.goBack()} title="Go back home" />
+//         </View>
+//     );
+// }
 
 // const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 
-const items = [
+export const NavItems = [
     {
         icon: "home",
         name: "Home",
@@ -130,8 +130,6 @@ const items = [
 ]
 
 export default function BottomNav() {
-    // Animated Tab Indicator...
-    // const tabOffsetVal/ue = useRef(new Animated.Value(0)).current;
     return (
 
         <Tab.Navigator

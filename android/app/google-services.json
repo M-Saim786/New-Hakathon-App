@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "199722486764-odjqfpvcc4n1qeoacot8p0mpq8995usc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.minihakathon",
+            "certificate_hash": "f75aee6a9ad446cb1cb368a5b2559bf0e0d0e806"
+          }
+        },
+        {
           "client_id": "199722486764-paae0jedvochhv9tcoqgjpk3h1mc1853.apps.googleusercontent.com",
           "client_type": 3
         }
