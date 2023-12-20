@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useRef, } from 'react';
 import {
     Animated,
     Button,
@@ -6,7 +6,6 @@ import {
     TouchableOpacity,
     View,
     Text,
-    Dimensions
 } from 'react-native';
 import { CurvedBottomBarExpo } from 'react-native-curved-bottom-bar';
 import Ionicons from "react-native-vector-icons/AntDesign";
@@ -14,19 +13,11 @@ import Home from '../Components/Home';
 import About from '../Components/About';
 import Setting from '../Components/Setting';
 import Profile from '../Components/Profile';
-import BottomModal from './BottomModal';
+// import BottomModal from './BottomModal';
 import RBSheet from "react-native-raw-bottom-sheet";
-import { Modal, RadioButton } from 'react-native-paper';
+import { RadioButton } from 'react-native-paper';
 
-// const Screen1 = () => {
-//     return <View style={styles.screen1} />;
-// };
-
-// const Screen2 = () => {
-//     return <View style={styles.screen2} />;
-// };
-
-export default function BottomNav() {
+export default function BottomNav({ navigation }) {
     const _renderIcon = (routeName, selectedTab) => {
         let icon = '';
 
@@ -64,22 +55,22 @@ export default function BottomNav() {
         );
     };
 
-    const [modalVisible, setmodalVisible] = useState(true)
-    const openModal = () => {
-        console.log("clock");
-        // RBSheet.open()
-        // Open the bottom sheet using your RBSheet reference
-
-    };
-    const width = Dimensions.get("window").width
     const refRBSheet = useRef();
     const handleChoice = (text) => {
         // setVisible(false)
-        if (text == "camera") {
+        if (text == "Donate") {
+            // return Form
+            navigation.navigate("Form", {
+                itemId: "Donation",
+                otherParam: 'anything you want here',
+            })
             // HandleCamera()
-        } else if (text == "gallery") {
-            console.log(text)
-            // OpenGallery()
+        } else if (text == "Help") {
+            navigation.navigate("Form", {
+                itemId: "Get Help",
+                otherParam: 'anything you want here',
+            })
+
         }
     }
 
@@ -90,7 +81,7 @@ export default function BottomNav() {
             type="DOWN"
             style={styles.bottomBar}
             shadowStyle={styles.shawdow}
-            height={55}
+            height={60}
             circleWidth={50}
             bgColor="white"
             initialRouteName="title1"
@@ -101,42 +92,30 @@ export default function BottomNav() {
                         style={styles.button}
                         onPress={() => refRBSheet.current.open()}
                     >
-                        <Ionicons name={'plus'} color="gray" size={25} />
+                        <Ionicons name={'plus'} color="white" size={25} />
                         <View
-                        // style={{
-                        //     flex: 1,
-                        //     justifyContent: "center",
-                        //     alignItems: "center",
-                        //     backgroundColor: "#000"
-                        // }}
                         >
                             {/* <Button title="OPEN BOTTOM SHEET" /> */}
                             <RBSheet
                                 ref={refRBSheet}
-                                height={200}
+                                height={150}
                                 openDuration={250}
                                 closeOnDragDown={true}
                                 closeOnPressMask={true}
                                 customStyles={{
-                                    // container: {
-                                    //     justifyContent: "center",
-                                    //     alignItems: "center"
-                                    // },
-                                    // customStyles={{
                                     wrapper: {
                                         backgroundColor: "transparent"
                                     },
                                     draggableIcon: {
                                         backgroundColor: "#000"
                                     }
-                                    // }}
                                 }}
                             >
                                 <View>
                                     <RadioButton.Group onValueChange={handleChoice} >
-                                        <RadioButton.Item label="Donate Now" value="gallery"
+                                        <RadioButton.Item label="Donate Now" value="Donate"
                                         />
-                                        <RadioButton.Item label="Request Help..!" value="camera" />
+                                        <RadioButton.Item label="Request Help..!" value="Help" />
                                     </RadioButton.Group>
                                 </View>
                             </RBSheet>
@@ -145,6 +124,9 @@ export default function BottomNav() {
                 </Animated.View>
             )}
             tabBar={renderTabBar}
+        // shadowStyle={{
+
+        // }}
         >
             <CurvedBottomBarExpo.Screen
                 name="Home"
@@ -166,6 +148,7 @@ export default function BottomNav() {
                 position="RIGHT"
                 component={() => <Setting />}
             />
+
         </CurvedBottomBarExpo.Navigator>
         // </NavigationContainer>
     );
@@ -177,13 +160,12 @@ export const styles = StyleSheet.create({
         padding: 20,
     },
     shawdow: {
-        shadowColor: '#DDDDDD',
+        shadowColor: '#000',
+        shadowOpacity: 6,
         shadowOffset: {
-            width: 0,
-            height: 0,
+            width: 5,
+            height: 10
         },
-        shadowOpacity: 1,
-        shadowRadius: 5,
     },
     button: {
         flex: 1,
@@ -196,8 +178,9 @@ export const styles = StyleSheet.create({
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#E8E8E8',
-        bottom: 30,
+        backgroundColor: '#8DC63F',
+        bottom: 33,
+        // position:"absolute",
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -220,13 +203,5 @@ export const styles = StyleSheet.create({
     img: {
         width: 30,
         height: 30,
-    },
-    screen1: {
-        flex: 1,
-        backgroundColor: '#BFEFFF',
-    },
-    screen2: {
-        flex: 1,
-        backgroundColor: '#FFEBCD',
     },
 });

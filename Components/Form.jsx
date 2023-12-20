@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
+import { View, Dimensions, ScrollView, StyleSheet } from 'react-native'
 import { Avatar, Badge, Button, Text, TextInput, Modal, Portal, PaperProvider, RadioButton } from 'react-native-paper'
-import { Dimensions, ScrollView, StyleSheet, View } from 'react-native'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
-import firestore from '@react-native-firebase/firestore';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Snackbar from 'react-native-snackbar';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import storage from '@react-native-firebase/storage'
-import * as Progress from 'react-native-progress';
+import SelectDropdown from 'react-native-select-dropdown'
 
-function Profile() {
+
+const countries = ["Egypt", "Canada", "Australia", "Ireland"]
+function Form({ route }) {
+    const { itemId } = route.params;
+    // const [secureText, setsecureText] = useState(true)
     const [Name, setName] = useState("")
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
@@ -198,24 +197,44 @@ function Profile() {
         }
     }
     const screenWidth = Dimensions.get("window").width
-    // console.log(screenWidth)
-
     return (
         <ScrollView>
             {ShowProgress && <Progress.Bar progress={ProgressVal} width={screenWidth} />}
             <View>
                 <View>
-                    <Text style={styles.heading}>
-                        Update Profile
-                    </Text>
+
+                    <View>
+                        <Text style={styles.heading}>
+                            {itemId} Form
+                        </Text>
+                    </View>
+                    <View>
+                        <SelectDropdown
+                            data={countries}
+                            onSelect={(selectedItem, index) => {
+                                console.log(selectedItem, index)
+                            }}
+                            buttonStyle={{ borderBlockColor: "black", borderWidth: 1 }}
+                            buttonTextAfterSelection={(selectedItem, index) => {
+                                // text represented after item is selected
+                                // if data array is an array of objects then return selectedItem.property to render after item is selected
+                                return selectedItem ? selectedItem : "Select Category"
+                            }}
+                            rowTextForSelection={(item, index) => {
+                                // text represented for each item in dropdown
+                                // if data array is an array of objects then return item.property to represent item in dropdown
+                                return item
+                            }}
+                        />
+                    </View>
                 </View>
-                <View style={styles.mainDiv}>
+                <View>
                     <View style={styles.avatar}>
                         <Avatar.Image
                             size={140}
                             color="white"
                             source={{
-                                uri: `${!ImgFile ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRspS_ukYMLvsWX4vPkC7PcTiCqJYIASaWapw&usqp=CAU" : ImgFile}`
+                                uri: `${!ImgFile ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbXlpRoY6yMdNaajjIrz4mhtkt2YTuXJhvYw&usqp=CAU" : ImgFile}`
                             }}
                             style={{
                                 resizeMode: 'contain',
@@ -297,7 +316,8 @@ function Profile() {
     )
 }
 
-export default Profile
+export default Form
+
 
 const styles = StyleSheet.create({
     heading: {
@@ -324,3 +344,4 @@ const styles = StyleSheet.create({
     },
     modal: { backgroundColor: 'white', width: 170, height: 100, zIndex: 2, borderRadius: 10, elevation: 3, }
 })
+

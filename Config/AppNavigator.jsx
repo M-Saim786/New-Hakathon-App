@@ -7,6 +7,7 @@ import SplashScreen from '../Components/SplashScreen';
 import Login from '../Components/Login';
 import SignUp from '../Components/SignUp';
 import GotoWhere from './GotoWhere';
+import Form from '../Components/Form';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,12 @@ function AppNavigator() {
                     component={GotoWhere}
                     options={{ headerShown: false }}
                 />
+                <Stack.Screen
+                    name="Form"
+                    component={Form}
+                    options={{ headerShown: false }}
+                />
+
             </Stack.Navigator>
         </NavigationContainer>
     );
