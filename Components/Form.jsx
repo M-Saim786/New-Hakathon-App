@@ -6,7 +6,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 
 
 const countries = ["Egypt", "Canada", "Australia", "Ireland"]
-function Form({ route }) {
+function Form({ route ,navigation}) {
     const { itemId } = route.params;
     // const [secureText, setsecureText] = useState(true)
     const [Name, setName] = useState("")
@@ -203,10 +203,20 @@ function Form({ route }) {
             <View>
                 <View>
 
-                    <View>
-                        <Text style={styles.heading}>
-                            {itemId} Form
-                        </Text>
+                    <View style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+
+                        justifyContent: "center"
+                    }}>
+                        <View style={{ textAlign: "center" }}>
+                            <Text style={styles.heading}>
+                                {itemId} Form
+                            </Text>
+                        </View>
+                        <View style={{ position: "absolute", right: 0, padding: 20 }}>
+                            <Icon color="#E75C62" name='close' style={{ fontSize: 25, }} onPress={()=>navigation.navigate("Home")} />
+                        </View>
                     </View>
                     <View>
                         <SelectDropdown
@@ -324,7 +334,9 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontSize: 25,
         margin: 20,
-        fontFamily: "Quicksand-Medium"
+        fontFamily: "Quicksand-Medium",
+        // borderBlockColor: "black",
+        // borderWidth: 1
     },
     mainDiv: {
         padding: 10,
