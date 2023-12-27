@@ -7,7 +7,7 @@ import SplashScreen from '../Components/SplashScreen';
 import Login from '../Components/Login';
 import SignUp from '../Components/SignUp';
 import GotoWhere from './GotoWhere';
-import Form from '../Components/Form';
+import Form from '../Components/Form/Form';
 
 const Stack = createNativeStackNavigator();
 

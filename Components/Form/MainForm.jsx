@@ -3,17 +3,23 @@ import { View, Dimensions, ScrollView, StyleSheet } from 'react-native'
 import { Avatar, Badge, Button, Text, TextInput, Modal, Portal, PaperProvider, RadioButton } from 'react-native-paper'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import SelectDropdown from 'react-native-select-dropdown'
-
+import Snackbar from 'react-native-snackbar'
+import firestore from "@react-native-firebase/firestore"
 
 const countries = ["Egypt", "Canada", "Australia", "Ireland"]
-function Form({ route ,navigation}) {
-    const { itemId } = route.params;
+function MainForm({ itemId, navigation, type }) {
+    console.log(itemId)
+    // const itemId = itemId;
+    // const { itemId } = route.params;
     // const [secureText, setsecureText] = useState(true)
     const [Name, setName] = useState("")
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
+    const [Title, setTitle] = useState("")
+    const [Desc, setDesc] = useState("")
+    // const [, set] = useState(second)
     const [loading, setloading] = useState(false)
-    const [secureText, setsecureText] = useState(true)
+    // const [secureText, setsecureText] = useState(true)
     const [Profile, setProfile] = useState([])
     const [UserId, setUserId] = useState("")
     const [ImgFile, setImgFile] = useState("")
@@ -108,15 +114,28 @@ function Form({ route ,navigation}) {
         // }
     }
 
-    const updateProfile = () => {
+    const addRequest = () => {
         console.log(ImgFile)
-        if (Password.length > 5) {
+        if (!Title || !Desc) {
+            Snackbar.show({
+                text: 'Title & Desc cannot be Null..',
+                duration: Snackbar.LENGTH_SHORT,
+                action: {
+                    text: 'Ok',
+                    textColor: 'green',
+                    onPress: () => { /* Do something. */ },
+                },
+            })
+
+        }
+        else {
             setloading(true)
-            firestore().collection("Users").doc(UserId).update({
-                Name: Name,
-                Email: Email,
-                Password: Password,
-                Img: ImgFile
+            firestore().collection("Requests").add({
+                Title: Title, Desc: Desc, status: "request", type: type
+                // Name: Name,
+                // Email: Email,
+                // Password: Password,
+                // Img: ImgFile
                 // key: res.user.uid
             }).then(() => {
                 Snackbar.show({
@@ -139,17 +158,6 @@ function Form({ route ,navigation}) {
                         onPress: () => { /* Do something. */ },
                     },
                 })
-            })
-        }
-        else {
-            Snackbar.show({
-                text: 'Password should be at least 6 characters',
-                duration: Snackbar.LENGTH_SHORT,
-                action: {
-                    text: 'Ok',
-                    textColor: 'green',
-                    onPress: () => { /* Do something. */ },
-                },
             })
         }
     }
@@ -215,10 +223,10 @@ function Form({ route ,navigation}) {
                             </Text>
                         </View>
                         <View style={{ position: "absolute", right: 0, padding: 20 }}>
-                            <Icon color="#E75C62" name='close' style={{ fontSize: 25, }} onPress={()=>navigation.navigate("Home")} />
+                            <Icon color="#E75C62" name='close' style={{ fontSize: 25, borderBlockColor: "red", borderWidth: 1 }} onPress={() => navigation.navigate("Home")} />
                         </View>
                     </View>
-                    <View>
+                    {/* <View>
                         <SelectDropdown
                             data={countries}
                             onSelect={(selectedItem, index) => {
@@ -235,8 +243,13 @@ function Form({ route ,navigation}) {
                                 // if data array is an array of objects then return item.property to represent item in dropdown
                                 return item
                             }}
+                            renderDropdownIcon={()=>{
+                                return(
+                                    <Icon name="chevron-up" size={20} />
+                                )
+                            }}
                         />
-                    </View>
+                    </View> */}
                 </View>
                 <View>
                     <View style={styles.avatar}>
@@ -279,45 +292,35 @@ function Form({ route ,navigation}) {
                     <View style={{ marginTop: 30 }}>
 
                         <TextInput
-                            label="Name"
+                            label="Title"
                             mode='outlined'
-                            placeholder='Enter Your Name'
-                            value={Name}
-                            onChangeText={text => setName(text)}
+                            placeholder='Enter Your Title'
+                            value={Title}
+                            onChangeText={text => setTitle(text)}
                             right={<TextInput.Icon icon="account" />}
                             style={{ marginTop: 20 }}
                         />
                         <TextInput
-                            label="Email"
+                            label="Description"
                             mode='outlined'
-                            placeholder='Enter Your Email'
-                            value={Email}
-                            onChangeText={text => setEmail(text)}
-                            right={<TextInput.Icon icon="email" />}
-                            style={{ marginTop: 20 }}
+                            placeholder='Enter Your Description'
+                            value={Desc}
+                            onChangeText={text => setDesc(text)}
+                            right={<TextInput.Icon icon="order-bool-descending-variant" />}
+                            style={{ marginTop: 20, }}
+                            numberOfLines={5}
+                            multiline={true}
                         />
-                        <TextInput
-                            label="Password"
-                            placeholder='Enter Your Password'
-                            mode='outlined'
-                            right={secureText ?
-                                <TextInput.Icon icon="eye" onPress={() => setsecureText(false)} /> :
-                                <TextInput.Icon icon="eye-off" onPress={() => setsecureText(true)} />
-                            }
-                            secureTextEntry={secureText}
-                            style={{ marginTop: 20 }}
-                            value={Password}
-                            onChangeText={text => setPassword(text)}
-                        />
+
                     </View>
                     <View>
                         <Button
                             icon="folder" mode="contained"
                             style={{ marginTop: 70, color: "white", backgroundColor: "#2B29A6" }}
                             loading={loading ? true : false}
-                            onPress={() => updateProfile()}
+                            onPress={() => addRequest()}
                         >
-                            Update Profile
+                            Submit Request
                         </Button>
                     </View>
                 </View>
@@ -326,7 +329,7 @@ function Form({ route ,navigation}) {
     )
 }
 
-export default Form
+export default MainForm
 
 
 const styles = StyleSheet.create({

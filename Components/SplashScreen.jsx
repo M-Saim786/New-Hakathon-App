@@ -32,7 +32,8 @@ import { ActivityIndicator, MD2Colors } from 'react-native-paper'; function Spla
         <View style={{ height: `100%`, display: "flex", justifyContent: "space-around", position: "relative", alignItems: "center", }}>
             <View>
                 <View>
-                    <Image source={require("../assets/Images/logo.png")} />
+                    <Image source={require("../assets/download.png")} />
+                    {/* <Image source={require("../assets/Images/logo.png")} /> */}
                 </View>
                 <View>
                     <Text style={styles.heading}>

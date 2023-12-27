@@ -31,7 +31,7 @@ export default function BottomNav({ navigation }) {
             case 'Profile':
                 icon = 'user';
                 break;
-            case 'Setting':
+            case 'Settings':
                 icon = 'setting';
                 break;
         }
@@ -67,10 +67,9 @@ export default function BottomNav({ navigation }) {
             // HandleCamera()
         } else if (text == "Help") {
             navigation.navigate("Form", {
-                itemId: "Get Help",
+                itemId: "Help",
                 otherParam: 'anything you want here',
             })
-
         }
     }
 

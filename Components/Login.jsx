@@ -46,7 +46,7 @@ function Login({ navigation }) {
                 setloading(false)
                 console.log(err)
                 console.log(err.message)
-                if (err.message == "[auth/invalid-email] The email address is badly formatted.") {
+                if (err.message.includes("auth/invalid-email")) {
                     Snackbar.show({
                         text: "Enter correct email format",
                         duration: Snackbar.LENGTH_SHORT,
@@ -57,7 +57,7 @@ function Login({ navigation }) {
                         },
                     });
                 }
-                else if (err.message == "[auth/weak-password] The given password is invalid. [ Password should be at least 6 characters ]") {
+                else if (err.message.includes("auth/weak-password")) {
                     Snackbar.show({
                         text: "Password should be at least 6 characters",
                         duration: Snackbar.LENGTH_SHORT,
@@ -68,7 +68,7 @@ function Login({ navigation }) {
                         },
                     });
                 }
-                else if (err.message == "[auth/invalid-credential] The supplied auth credential is incorrect, malformed or has expired.") {
+                else if (err.message, includes("auth/invalid-credential")) {
                     Snackbar.show({
                         text: "The supplied auth credential is incorrect or expired",
                         duration: Snackbar.LENGTH_SHORT,
@@ -79,7 +79,13 @@ function Login({ navigation }) {
                         },
                     });
                 }
-                else if (err.message == "[auth/too-many-requests] We have blocked all requests from this device due to unusual activity. Try again later. [ Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. ]") {
+                else if (err.message.includes("auth/network-request-failed")) {
+                    Snackbar.show({
+                        text: "Network error check your Network connection",
+                        duration: Snackbar.LENGTH_SHORT,
+                    });
+                }
+                else if (err.message.includes("auth/too-many-requests")) {
                     Snackbar.show({
                         text: "We have blocked all requests from this device due to unusual activity. Try again later.",
                         duration: Snackbar.LENGTH_SHORT,

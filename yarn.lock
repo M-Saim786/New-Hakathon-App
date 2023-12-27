@@ -5905,7 +5905,7 @@
     "kleur" "^3.0.3"
     "sisteransi" "^1.0.5"
 
-"prop-types@^15.7.2", "prop-types@^15.8.1":
+"prop-types@^15.6.2", "prop-types@^15.7.2", "prop-types@^15.8.1":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -5999,6 +5999,13 @@
   dependencies:
     "@react-aria/utils" "3.17.0"
 
+"react-native-animatable@1.3.3":
+  "integrity" "sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w=="
+  "resolved" "https://registry.npmjs.org/react-native-animatable/-/react-native-animatable-1.3.3.tgz"
+  "version" "1.3.3"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "react-native-curved-bottom-bar@^3.2.6":
   "integrity" "sha512-o7LdGACt/KdL+kRoGdcXSRYrCxI6L/cHzeNA8OhfBYl//eh087N14dF/Cvoz/JN7YPUtrM5Xwdm4tuSI8PzNKQ=="
   "resolved" "https://registry.npmjs.org/react-native-curved-bottom-bar/-/react-native-curved-bottom-bar-3.2.6.tgz"
@@ -6027,6 +6034,14 @@
   "integrity" "sha512-An0hn2mwqjGAA2mbsXdHRTyoMMklGPT9stIjE2zvkegU7CdoFhowqvVHfnELJNZnfAiSQuIaeY//z0r1R0lsgw=="
   "resolved" "https://registry.npmjs.org/react-native-image-picker/-/react-native-image-picker-7.1.0.tgz"
   "version" "7.1.0"
+
+"react-native-modal@^13.0.1":
+  "integrity" "sha512-UB+mjmUtf+miaG/sDhOikRfBOv0gJdBU2ZE1HtFWp6UixW9jCk/bhGdHUgmZljbPpp0RaO/6YiMmQSSK3kkMaw=="
+  "resolved" "https://registry.npmjs.org/react-native-modal/-/react-native-modal-13.0.1.tgz"
+  "version" "13.0.1"
+  dependencies:
+    "prop-types" "^15.6.2"
+    "react-native-animatable" "1.3.3"
 
 "react-native-paper@^5.11.3", "react-native-paper@>= 3.0.0":
   "integrity" "sha512-pi48Qp1KLsU1dtnup3NsbZmpp9RrPGZIMeTK0o6KukK1YdBcmBQyMb1/sYHt1dE4pccXLQXbSVZjzNZfmxUGyQ=="
@@ -6103,7 +6118,7 @@
     "prop-types" "^15.7.2"
     "yargs" "^16.1.1"
 
-"react-native@*", "react-native@^0.0.0-0 || >=0.60 <1.0", "react-native@>=0.60", "react-native@0.72.7":
+"react-native@*", "react-native@^0.0.0-0 || >=0.60 <1.0", "react-native@>=0.60", "react-native@>=0.65.0", "react-native@0.72.7":
   "integrity" "sha512-dqVFojOO9rOvyFbbM3/v9/GJR355OSuBhEY4NQlMIRc2w0Xch5MT/2uPoq3+OvJ+5h7a8LFAco3fucSffG0FbA=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.72.7.tgz"
   "version" "0.72.7"
