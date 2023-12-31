@@ -9,13 +9,14 @@ import {
 } from 'react-native';
 import { CurvedBottomBarExpo } from 'react-native-curved-bottom-bar';
 import Ionicons from "react-native-vector-icons/AntDesign";
-import Home from '../Components/Home';
-import About from '../Components/About';
-import Setting from '../Components/Setting';
-import Profile from '../Components/Profile';
+import Home from '../Components/Home/Home';
+// import About from '../Components/About';
+import Setting from '../Components/Settings/Setting';
+import Profile from '../Components/Profile/Profile';
 // import BottomModal from './BottomModal';
 import RBSheet from "react-native-raw-bottom-sheet";
 import { RadioButton } from 'react-native-paper';
+import Posts from '../Components/Posts/Posts';
 
 export default function BottomNav({ navigation }) {
     const _renderIcon = (routeName, selectedTab) => {
@@ -25,7 +26,7 @@ export default function BottomNav({ navigation }) {
             case 'Home':
                 icon = 'home';
                 break;
-            case 'About':
+            case 'Post':
                 icon = 'profile';
                 break;
             case 'Profile':
@@ -40,7 +41,8 @@ export default function BottomNav({ navigation }) {
             <Ionicons
                 name={icon}
                 size={25}
-                color={routeName === selectedTab ? 'black' : 'gray'}
+                color={routeName === selectedTab ? "#368FC7" : 'gray'}
+                style={{ fontWeight: `${routeName == selectedTab ? "bolder" : 'light'}` }}
             />
         );
     };
@@ -83,7 +85,7 @@ export default function BottomNav({ navigation }) {
             height={60}
             circleWidth={50}
             bgColor="white"
-            initialRouteName="title1"
+            // initialRouteName="title1"
             borderTopLeftRight
             renderCircle={({ selectedTab, navigate }) => (
                 <Animated.View style={styles.btnCircleUp}>
@@ -123,6 +125,9 @@ export default function BottomNav({ navigation }) {
                 </Animated.View>
             )}
             tabBar={renderTabBar}
+            screenOptions={{
+                headerShown: false
+            }}
         // shadowStyle={{
 
         // }}
@@ -133,9 +138,9 @@ export default function BottomNav({ navigation }) {
                 component={() => <Home />}
             />
             <CurvedBottomBarExpo.Screen
-                name="About"
+                name="Post"
                 position="LEFT"
-                component={() => <About />}
+                component={() => <Posts />}
             />
             <CurvedBottomBarExpo.Screen
                 name="Profile"

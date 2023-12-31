@@ -32,33 +32,24 @@ import { ActivityIndicator, MD2Colors } from 'react-native-paper'; function Spla
         <View style={{ height: `100%`, display: "flex", justifyContent: "space-around", position: "relative", alignItems: "center", }}>
             <View>
                 <View>
-                    <Image source={require("../assets/download.png")} />
-                    {/* <Image source={require("../assets/Images/logo.png")} /> */}
+                    <Image source={require("../assets/Images/logo.png")} />
+                    <View>
+                        <Text style={{ color: "#0574B9", textAlign: "center", fontFamily: "Quicksand-Bold" }}>
+                            Donation App
+                        </Text>
+                    </View>
                 </View>
-                <View>
+                <View style={styles.headingDiv}>
                     <Text style={styles.heading}>
-                        Welcome..!
+                        Welc
+                    </Text>
+                    <Text style={styles.heading}>
+                        ome..!
                     </Text>
                 </View>
 
             </View>
-            {/* <View style={{ width: "100%" }}> */}
-
-
-            {showLoader && <ActivityIndicator animating={true} color={"#007FFF"} size="large" />}
-            {/* <View style={{ width: `100%`, padding: 10 }}>
-                    <Button icon="chevron-right"
-                        textColor='white'
-                        contentStyle={{ flexDirection: 'row-reverse' }}
-                        style={{
-                            backgroundColor: "#2B29A6", color: "white",
-                            alignItems: "center"
-                         }} onPress={() => navigation.replace("login")}>
-                        Get Started
-                    </Button>
-
-                </View> */}
-            {/* </View> */}
+            {showLoader && <ActivityIndicator animating={true} color={"#8CC540"} size="large" />}
         </View>
         // {/* </ImageBackground > */}
 
@@ -70,9 +61,16 @@ export default SplashScreen
 const styles = StyleSheet.create({
     heading: {
         fontSize: 30,
-        textAlign: "center",
-        fontFamily: "DancingScript-Bold",
-        marginTop: 20
+        fontFamily: "Quicksand-Bold",
+        color: "#0574B9"
         // fontWeight: "bold"
     },
+    headingDiv: {
+        display: "flex",
+        marginTop: 30,
+        flexDirection: "row",
+        justifyContent: "center",
+        // borderBlockColor: "black",
+        // borderWidth: 1
+    }
 })

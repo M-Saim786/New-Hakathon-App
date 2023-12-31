@@ -69,7 +69,9 @@ function Form({ route, navigation }) {
                 </PaperProvider> : <MainForm itemId={
                     itemId == "Donation" ?
                         `Donate ${filterCategory[0]?.name}` :
-                        `Request ${filterCategory[0]?.name}`} type={itemId} />}
+                        `Request ${filterCategory[0]?.name}`} type={itemId} 
+                        navigation={navigation}
+                        />}
         </View >
         // </ScrollView>
     )

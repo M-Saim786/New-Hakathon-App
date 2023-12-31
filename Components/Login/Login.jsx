@@ -13,6 +13,7 @@ import {
     // GoogleSigninButton,
     statusCodes,
 } from '@react-native-google-signin/google-signin';
+import OtherLogin from '../OtherLogin';
 function Login({ navigation }) {
 
 
@@ -131,158 +132,144 @@ function Login({ navigation }) {
         }
     }
 
-    const GoogleRegister = async () => {
-        console.log("google")
+    // const GoogleRegister = async () => {
+    //     console.log("google")
 
-        GoogleSignin.configure({
-            webClientId: '199722486764-paae0jedvochhv9tcoqgjpk3h1mc1853.apps.googleusercontent.com',
-            offlineAccess: true,
-            hostedDomain: '', // specifies a hosted domain restriction
-            forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
-            accountName: '', // [Android] specifies an account name on the device that should be used
-            googleServicePlistPath: '',
-            openIdRealm: '',
-            profileImageSize: 120,
-        });
-        try {
-            await GoogleSignin.hasPlayServices();
-            const userInfo = await GoogleSignin.signIn();
-            const { idToken } = await GoogleSignin.signIn();
-            console.log("userInfo", userInfo)
-            const googleCredentials = auth.GoogleAuthProvider.credential(idToken);
-            await auth().signInWithCredential(googleCredentials);
-            navigation.navigate("Main")
-            return userInfo;
-            // setState({ userInfo });
-        } catch (error) {
-            console.log("error", error)
-            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-                Snackbar.show({
-                    text: "SignIn cancelled by user...",
-                    duration: Snackbar.LENGTH_SHORT,
-                    action: {
-                        text: 'Ok',
-                        textColor: 'green',
-                        onPress: () => { /* Do something. */ },
-                    },
-                });
-                // user cancelled the login flow
-            } else if (error.code === statusCodes.IN_PROGRESS) {
-                Snackbar.show({
-                    text: "SignIn already in progress...",
-                    duration: Snackbar.LENGTH_SHORT,
-                    action: {
-                        text: 'Ok',
-                        textColor: 'green',
-                        onPress: () => { /* Do something. */ },
-                    },
-                });
-                // operation (e.g. sign in) is in progress already
-            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-                Snackbar.show({
-                    text: "Google play services outdated or not available",
-                    duration: Snackbar.LENGTH_SHORT,
-                    action: {
-                        text: 'Ok',
-                        textColor: 'green',
-                        onPress: () => { /* Do something. */ },
-                    },
-                });
-                // play services not available or outdated
-            } else {
-                Snackbar.show({
-                    text: error.message,
-                    duration: Snackbar.LENGTH_SHORT,
-                    action: {
-                        text: 'Ok',
-                        textColor: 'green',
-                        onPress: () => { /* Do something. */ },
-                    },
-                });
-                // some other error happened
-            }
-        }
-    }
+    //     GoogleSignin.configure({
+    //         webClientId: '199722486764-paae0jedvochhv9tcoqgjpk3h1mc1853.apps.googleusercontent.com',
+    //         offlineAccess: true,
+    //         hostedDomain: '', // specifies a hosted domain restriction
+    //         forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
+    //         accountName: '', // [Android] specifies an account name on the device that should be used
+    //         googleServicePlistPath: '',
+    //         openIdRealm: '',
+    //         profileImageSize: 120,
+    //     });
+    //     try {
+    //         await GoogleSignin.hasPlayServices();
+    //         const userInfo = await GoogleSignin.signIn();
+    //         const { idToken } = await GoogleSignin.signIn();
+    //         console.log("userInfo", userInfo)
+    //         const googleCredentials = auth.GoogleAuthProvider.credential(idToken);
+    //         await auth().signInWithCredential(googleCredentials);
+    //         navigation.navigate("Main")
+    //         return userInfo;
+    //         // setState({ userInfo });
+    //     } catch (error) {
+    //         console.log("error", error)
+    //         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+    //             Snackbar.show({
+    //                 text: "SignIn cancelled by user...",
+    //                 duration: Snackbar.LENGTH_SHORT,
+    //                 action: {
+    //                     text: 'Ok',
+    //                     textColor: 'green',
+    //                     onPress: () => { /* Do something. */ },
+    //                 },
+    //             });
+    //             // user cancelled the login flow
+    //         } else if (error.code === statusCodes.IN_PROGRESS) {
+    //             Snackbar.show({
+    //                 text: "SignIn already in progress...",
+    //                 duration: Snackbar.LENGTH_SHORT,
+    //                 action: {
+    //                     text: 'Ok',
+    //                     textColor: 'green',
+    //                     onPress: () => { /* Do something. */ },
+    //                 },
+    //             });
+    //             // operation (e.g. sign in) is in progress already
+    //         } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+    //             Snackbar.show({
+    //                 text: "Google play services outdated or not available",
+    //                 duration: Snackbar.LENGTH_SHORT,
+    //                 action: {
+    //                     text: 'Ok',
+    //                     textColor: 'green',
+    //                     onPress: () => { /* Do something. */ },
+    //                 },
+    //             });
+    //             // play services not available or outdated
+    //         } else {
+    //             Snackbar.show({
+    //                 text: error.message,
+    //                 duration: Snackbar.LENGTH_SHORT,
+    //                 action: {
+    //                     text: 'Ok',
+    //                     textColor: 'green',
+    //                     onPress: () => { /* Do something. */ },
+    //                 },
+    //             });
+    //             // some other error happened
+    //         }
+    //     }
+    // }
 
     return (
-        <ImageBackground source={require("../assets/Images/loginImg.png")} style={{ width: `100%`, height: `100%`, }} >
-            <View style={styles.loginDiv}>
-                <View style={styles.innerDiv}>
-                    <View>
-                        <Text style={styles.heading}>
-                            Login Here..!
+        // <ImageBackground source={require("../assets/Images/loginImg.png")} style={{ width: `100%`, height: `100%`, }} >
+        <View style={styles.loginDiv}>
+            <View style={styles.innerDiv}>
+                <View>
+                    <Text style={styles.heading}>
+                        Login Here..!
+                    </Text>
+                </View>
+                <View style={styles.mainDiv}>
+
+                    <TextInput
+                        label="Email"
+                        mode='outlined'
+                        placeholder='Enter Your Email'
+                        value={Email}
+                        onChangeText={text => setEmail(text)}
+                        right={<TextInput.Icon icon="email" />}
+                    />
+                    <TextInput
+                        label="Password"
+                        placeholder='Enter Your Password'
+                        mode='outlined'
+                        right={secureText ?
+                            <TextInput.Icon icon="eye" onPress={() => setsecureText(false)} /> :
+                            <TextInput.Icon icon="eye-off" onPress={() => setsecureText(true)} />
+                        }
+                        secureTextEntry={secureText}
+                        style={{ marginTop: 20 }}
+                        value={Password}
+                        onChangeText={text => setPassword(text)}
+                    />
+                </View>
+
+                <OtherLogin />
+                <View style={styles.signUpHere}>
+                    <Text style={{ marginRight: 10, fontFamily: "Quicksand-Medium", color: "black" }}>
+                        Don't have account
+                    </Text>
+                    <Pressable
+                        onPress={() => navigation.replace("signUp")}
+                    >
+                        <Text style={{
+                            color: "#8CC445",
+                            // color: "red",
+                            fontFamily: "Quicksand-Bold",
+                            // fontWeight: "bold"
+                        }}>
+                            Sign Up here
                         </Text>
-                    </View>
-                    <View style={styles.mainDiv}>
+                    </Pressable>
+                </View>
 
-                        <TextInput
-                            label="Email"
-                            mode='outlined'
-                            placeholder='Enter Your Email'
-                            value={Email}
-                            onChangeText={text => setEmail(text)}
-                            right={<TextInput.Icon icon="email" />}
-                        />
-                        <TextInput
-                            label="Password"
-                            placeholder='Enter Your Password'
-                            mode='outlined'
-                            right={secureText ?
-                                <TextInput.Icon icon="eye" onPress={() => setsecureText(false)} /> :
-                                <TextInput.Icon icon="eye-off" onPress={() => setsecureText(true)} />
-                            }
-                            secureTextEntry={secureText}
-                            style={{ marginTop: 20 }}
-                            value={Password}
-                            onChangeText={text => setPassword(text)}
-                        />
-                    </View>
-
-                    <View style={styles.otherLogin}>
-                        <TouchableOpacity>
-
-                            <Pressable onPress={GoogleRegister}>
-                                <Image source={require("../assets/Images/Google.png")} style={styles.otherLoginImg} />
-                            </Pressable>
-                        </TouchableOpacity>
-                        <Pressable>
-                            <Image source={require("../assets/Images/Facebook.png")} style={styles.otherLoginImg} />
-                        </Pressable>
-                        <Pressable>
-                            <Image source={require("../assets/Images/apple.png")} style={styles.otherLoginImg} />
-                        </Pressable>
-                    </View>
-
-                    <View style={styles.signUpHere}>
-                        <Text style={{ marginRight: 10, fontFamily: "Quicksand-Medium", color: "black" }}>
-                            Don't have account
-                        </Text>
-                        <Pressable
-                            onPress={() => navigation.replace("signUp")}
-                        >
-                            <Text style={{
-                                color: "#52CFE0",
-                                // color: "red",
-                                fontFamily: "Quicksand-Bold",
-                                // fontWeight: "bold"
-                            }}>
-                                Sign Up here
-                            </Text>
-                        </Pressable>
-                    </View>
-
-                    <View>
-                        <Button icon="login" mode="contained"
-                            onPress={LoginApp}
-                            contentStyle={{ flexDirection: "row-reverse" }}
-                            loading={loading ? true : false}
-                            style={styles.BtnStyle}>
-                            Login
-                        </Button>
-                    </View>
+                <View>
+                    <Button icon="login" mode="contained"
+                        onPress={LoginApp}
+                        contentStyle={{ flexDirection: "row-reverse" }}
+                        loading={loading ? true : false}
+                        style={styles.BtnStyle}>
+                        Login
+                    </Button>
                 </View>
             </View>
-        </ImageBackground>
+        </View>
+        // </ImageBackground>
     )
 }
 
@@ -347,7 +334,7 @@ const styles = StyleSheet.create({
     }, BtnStyle: {
         marginTop: 25,
         color: "white",
-        backgroundColor: "#2B29A6",
+        backgroundColor: "#0574B9",
         alignItems: "center",
         fontFamily: "Quicksand-Medium",
     }

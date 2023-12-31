@@ -1,15 +1,15 @@
 import React from 'react'
-import { View } from 'react-native'
 import { Text } from 'react-native-paper'
+import { View } from 'react-native'
 
-function Setting() {
+function Posts() {
     return (
         <View>
             <Text>
-                Setting
+            Post
             </Text>
         </View>
     )
 }
 
-export default Setting
+export default Posts

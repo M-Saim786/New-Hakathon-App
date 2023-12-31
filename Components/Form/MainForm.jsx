@@ -5,6 +5,11 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import SelectDropdown from 'react-native-select-dropdown'
 import Snackbar from 'react-native-snackbar'
 import firestore from "@react-native-firebase/firestore"
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
+import storage from '@react-native-firebase/storage'
+import * as Progress from 'react-native-progress';
+
 
 const countries = ["Egypt", "Canada", "Australia", "Ireland"]
 function MainForm({ itemId, navigation, type }) {
@@ -114,7 +119,8 @@ function MainForm({ itemId, navigation, type }) {
         // }
     }
 
-    const addRequest = () => {
+    const addRequest = async () => {
+        const userId = await AsyncStorage.getItem("userId")
         console.log(ImgFile)
         if (!Title || !Desc) {
             Snackbar.show({
@@ -131,12 +137,18 @@ function MainForm({ itemId, navigation, type }) {
         else {
             setloading(true)
             firestore().collection("Requests").add({
-                Title: Title, Desc: Desc, status: "request", type: type
-                // Name: Name,
-                // Email: Email,
-                // Password: Password,
-                // Img: ImgFile
-                // key: res.user.uid
+                title: Title,
+                 desc: Desc,
+                  status: "request", 
+                  type: type,
+                createdAt: new Date().toLocaleString(), // Corrected this line
+                userId: userId,
+                requestImg :ImgFile,
+                Phone:"",
+                Cnic:"",
+                gender:"",
+
+
             }).then(() => {
                 Snackbar.show({
                     text: 'Updated Successfully..!',
@@ -162,28 +174,7 @@ function MainForm({ itemId, navigation, type }) {
         }
     }
 
-    useEffect(() => {
-        //   const dbref = 
-        getData()
-    }, [])
-    const getData = async () => {
-        const userId = await AsyncStorage.getItem("userId")
-        setUserId(userId)
-        // console.log(userId)
-        // let ID =JSON.parse(userId)
-        const userDocument = await firestore().collection('Users').doc((userId)).get().then((res) => {
-            console.log("userDATA", res?._data?.Email)
-            setProfile(res?._data)
-            setName(res?._data?.Name)
-            setEmail(res?._data?.Email)
-            setPassword(res?._data?.Password)
-            setImgFile(res?._data?.Img)
-            console.log("Profile", Profile)
-        }).catch((err) => {
-            console.log(err)
-        })
 
-    }
 
     // Modal Data
     const [visible, setVisible] = React.useState(false);
@@ -208,7 +199,7 @@ function MainForm({ itemId, navigation, type }) {
     return (
         <ScrollView>
             {ShowProgress && <Progress.Bar progress={ProgressVal} width={screenWidth} />}
-            <View>
+            <View style={styles.mainDiv}>
                 <View>
 
                     <View style={{
@@ -223,7 +214,7 @@ function MainForm({ itemId, navigation, type }) {
                             </Text>
                         </View>
                         <View style={{ position: "absolute", right: 0, padding: 20 }}>
-                            <Icon color="#E75C62" name='close' style={{ fontSize: 25, borderBlockColor: "red", borderWidth: 1 }} onPress={() => navigation.navigate("Home")} />
+                            <Icon color="#E75C62" name='close' style={{ fontSize: 25, }} onPress={() => navigation.navigate("Home")} />
                         </View>
                     </View>
                     {/* <View>
@@ -316,7 +307,7 @@ function MainForm({ itemId, navigation, type }) {
                     <View>
                         <Button
                             icon="folder" mode="contained"
-                            style={{ marginTop: 70, color: "white", backgroundColor: "#2B29A6" }}
+                            style={{ marginTop: 70, color: "white", backgroundColor: "#0574B9" }}
                             loading={loading ? true : false}
                             onPress={() => addRequest()}
                         >
