@@ -150,7 +150,7 @@ export default function BottomNav({ navigation }) {
             <CurvedBottomBarExpo.Screen
                 name="Settings"
                 position="RIGHT"
-                component={() => <Setting />}
+                component={() => <Setting navigation={navigation} />}
             />
 
         </CurvedBottomBarExpo.Navigator>

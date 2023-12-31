@@ -25,7 +25,7 @@ function GotoWhere() {
     }
     return (
         <Stack.Navigator>
-            {Role == "admin" ?
+            {/* {Role == "admin" ?
                 <>
                     <Stack.Screen
                         name="Drawer"
@@ -41,7 +41,7 @@ function GotoWhere() {
                         options={{ headerShown: false }}
                     />
                 </>
-            }
+            } */}
         </Stack.Navigator>
     )
 }

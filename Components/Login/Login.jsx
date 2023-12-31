@@ -23,8 +23,10 @@ function Login({ navigation }) {
     const [loading, setloading] = useState(false)
 
     const LoginApp = async () => {
-        // console.log(Email, Password)
+        console.log(Email, Password)
         console.log("Login")
+        // await AsyncStorage.setItem('userId', "nkx6eVO5upTllkxoHJ7uA3Y1XXn2");
+
         if (Email !== "" && Password !== "") {
             setloading(true)
             await auth().signInWithEmailAndPassword(Email, Password).then(async (res) => {
@@ -38,8 +40,8 @@ function Login({ navigation }) {
                         onPress: () => { /* Do something. */ },
                     },
                 });
-                // console.log("user", JSON.stringify(res.user))
                 await AsyncStorage.setItem('userId', res.user.uid);
+                // console.log("user", JSON.stringify(res.user))
                 setloading(false)
                 LoginCheck()
 
@@ -69,7 +71,7 @@ function Login({ navigation }) {
                         },
                     });
                 }
-                else if (err.message, includes("auth/invalid-credential")) {
+                else if (err.message, includes("incorrect, malformed or has expired.")) {
                     Snackbar.show({
                         text: "The supplied auth credential is incorrect or expired",
                         duration: Snackbar.LENGTH_SHORT,
@@ -125,6 +127,7 @@ function Login({ navigation }) {
 
     const LoginCheck = async () => {
         const userId = await AsyncStorage.getItem("userId")
+        console.log("userId", userId)
         if (userId) {
             navigation.replace("Main")
         } else {

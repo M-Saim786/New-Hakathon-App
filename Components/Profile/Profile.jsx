@@ -106,7 +106,6 @@ function Profile() {
         } catch (error) {
             console.error('Error uploading image: ', error);
         }
-        // }
     }
 
     const updateProfile = () => {
