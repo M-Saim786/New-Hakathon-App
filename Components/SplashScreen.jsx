@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Text } from 'react-native-paper'
+import { Text } from 'react-native-paper'
 import { Image, ImageBackground, StyleSheet, View, } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ActivityIndicator, MD2Colors } from 'react-native-paper'; function SplashScreen({ navigation }) {
@@ -28,30 +28,30 @@ import { ActivityIndicator, MD2Colors } from 'react-native-paper'; function Spla
 
 
     return (
-        // <ImageBackground source={require("../assets/Images/signUpImg.png")} style={{ height: `100%`, width: `100%` }}>
-        <View style={{ height: `100%`, display: "flex", justifyContent: "space-around", position: "relative", alignItems: "center", }}>
-            <View>
+        <ImageBackground source={require("../assets/Images/bgImg.png")} style={{ height: `100%`, width: `100%`, }}>
+            <View style={{ height: `100%`, display: "flex", justifyContent: "space-around", position: "relative", alignItems: "center", }}>
                 <View>
-                    <Image source={require("../assets/Images/logo.png")} />
                     <View>
-                        <Text style={{ color: "#0574B9", textAlign: "center", fontFamily: "Quicksand-Bold" }}>
-                            Donation App
+                        <Image source={require("../assets/Images/logo.png")} />
+                        <View>
+                            <Text style={{ color: "black", textAlign: "center", fontFamily: "Quicksand-Bold" }}>
+                                Donation App
+                            </Text>
+                        </View>
+                    </View>
+                    <View style={styles.headingDiv}>
+                        <Text style={styles.heading}>
+                            Welc
+                        </Text>
+                        <Text style={styles.heading}>
+                            ome..!
                         </Text>
                     </View>
-                </View>
-                <View style={styles.headingDiv}>
-                    <Text style={styles.heading}>
-                        Welc
-                    </Text>
-                    <Text style={styles.heading}>
-                        ome..!
-                    </Text>
-                </View>
 
+                </View>
+                {showLoader && <ActivityIndicator animating={true} color={"#8CC540"} size="large" />}
             </View>
-            {showLoader && <ActivityIndicator animating={true} color={"#8CC540"} size="large" />}
-        </View>
-        // {/* </ImageBackground > */}
+        </ImageBackground >
 
     )
 }

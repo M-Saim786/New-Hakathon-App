@@ -1,4 +1,4 @@
-{
+[{
     "assets": [
         {
             "fileName": "rn_image_picker_lib_temp_ecd3ec22-4797-4206-ba0c-67175382b152.jpg",
@@ -10,4 +10,36 @@
             "width": 2448
         }
     ]
-}
+},
+{
+    "additionalUserInfo": {
+        "isNewUser": false,
+        "profile": {
+            "aud": "199722486764-paae0jedvochhv9tcoqgjpk3h1mc1853.apps.googleusercontent.com",
+            "azp": "199722486764-16sdrvh8eaa2bta0tdnrn9hstulpgr66.apps.googleusercontent.com",
+            "email": "saimrashid3344@gmail.com",
+            "email_verified": true,
+            "exp": 1704138511,
+            "family_name": "saimrashid",
+            "given_name": "saimrashid",
+            "iat": 1704134911,
+            "iss": "https://accounts.google.com",
+            "locale": "en",
+            "name": "saimrashid saimrashid",
+            "picture": "https://lh3.googleusercontent.com/a/ACg8ocK4oLqJhPYvWoOJ8lx2ZL74D8ZbNbtwzQ3b53yJoQIHAV4=s96-c",
+            "sub": "111736741808996625714"
+        },
+        "providerId": "google.com"
+    },
+    "user": {
+        "displayName": "saimrashid saimrashid",
+        "email": "saimrashid3344@gmail.com",
+        "emailVerified": true,
+        "isAnonymous": false,
+        "phoneNumber": null,
+        "photoURL": "https://lh3.googleusercontent.com/a/ACg8ocK4oLqJhPYvWoOJ8lx2ZL74D8ZbNbtwzQ3b53yJoQIHAV4=s96-c",
+        "providerId": "firebase",
+        "tenantId": null,
+        "uid": "ZZX4wLEymLTyBDa5jtHrkRbOHu12"
+    }
+}]

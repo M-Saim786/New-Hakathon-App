@@ -25,7 +25,6 @@ function Login({ navigation }) {
     const LoginApp = async () => {
         console.log(Email, Password)
         console.log("Login")
-        // await AsyncStorage.setItem('userId', "nkx6eVO5upTllkxoHJ7uA3Y1XXn2");
 
         if (Email !== "" && Password !== "") {
             setloading(true)
@@ -71,7 +70,7 @@ function Login({ navigation }) {
                         },
                     });
                 }
-                else if (err.message, includes("incorrect, malformed or has expired.")) {
+                else if (err.message.includes("incorrect, malformed or has expired.")) {
                     Snackbar.show({
                         text: "The supplied auth credential is incorrect or expired",
                         duration: Snackbar.LENGTH_SHORT,
@@ -209,70 +208,70 @@ function Login({ navigation }) {
     // }
 
     return (
-        // <ImageBackground source={require("../assets/Images/loginImg.png")} style={{ width: `100%`, height: `100%`, }} >
-        <View style={styles.loginDiv}>
-            <View style={styles.innerDiv}>
-                <View>
-                    <Text style={styles.heading}>
-                        Login Here..!
-                    </Text>
-                </View>
-                <View style={styles.mainDiv}>
-
-                    <TextInput
-                        label="Email"
-                        mode='outlined'
-                        placeholder='Enter Your Email'
-                        value={Email}
-                        onChangeText={text => setEmail(text)}
-                        right={<TextInput.Icon icon="email" />}
-                    />
-                    <TextInput
-                        label="Password"
-                        placeholder='Enter Your Password'
-                        mode='outlined'
-                        right={secureText ?
-                            <TextInput.Icon icon="eye" onPress={() => setsecureText(false)} /> :
-                            <TextInput.Icon icon="eye-off" onPress={() => setsecureText(true)} />
-                        }
-                        secureTextEntry={secureText}
-                        style={{ marginTop: 20 }}
-                        value={Password}
-                        onChangeText={text => setPassword(text)}
-                    />
-                </View>
-
-                <OtherLogin />
-                <View style={styles.signUpHere}>
-                    <Text style={{ marginRight: 10, fontFamily: "Quicksand-Medium", color: "black" }}>
-                        Don't have account
-                    </Text>
-                    <Pressable
-                        onPress={() => navigation.replace("signUp")}
-                    >
-                        <Text style={{
-                            color: "#8CC445",
-                            // color: "red",
-                            fontFamily: "Quicksand-Bold",
-                            // fontWeight: "bold"
-                        }}>
-                            Sign Up here
+        <ImageBackground source={require("../../assets/Images/bgImg.png")} style={{ width: `100%`, height: `100%`, }} >
+            <View style={styles.loginDiv}>
+                <View style={styles.innerDiv}>
+                    <View>
+                        <Text style={styles.heading}>
+                            Login Here..!
                         </Text>
-                    </Pressable>
-                </View>
+                    </View>
+                    <View style={styles.mainDiv}>
 
-                <View>
-                    <Button icon="login" mode="contained"
-                        onPress={LoginApp}
-                        contentStyle={{ flexDirection: "row-reverse" }}
-                        loading={loading ? true : false}
-                        style={styles.BtnStyle}>
-                        Login
-                    </Button>
+                        <TextInput
+                            label="Email"
+                            mode='outlined'
+                            placeholder='Enter Your Email'
+                            value={Email}
+                            onChangeText={text => setEmail(text)}
+                            right={<TextInput.Icon icon="email" />}
+                        />
+                        <TextInput
+                            label="Password"
+                            placeholder='Enter Your Password'
+                            mode='outlined'
+                            right={secureText ?
+                                <TextInput.Icon icon="eye" onPress={() => setsecureText(false)} /> :
+                                <TextInput.Icon icon="eye-off" onPress={() => setsecureText(true)} />
+                            }
+                            secureTextEntry={secureText}
+                            style={{ marginTop: 20 }}
+                            value={Password}
+                            onChangeText={text => setPassword(text)}
+                        />
+                    </View>
+
+                    <OtherLogin navigation={navigation} />
+                    <View style={styles.signUpHere}>
+                        <Text style={{ marginRight: 10, fontFamily: "Quicksand-Medium", color: "black" }}>
+                            Don't have account
+                        </Text>
+                        <Pressable
+                            onPress={() => navigation.replace("signUp")}
+                        >
+                            <Text style={{
+                                color: "#8CC445",
+                                // color: "red",
+                                fontFamily: "Quicksand-Bold",
+                                // fontWeight: "bold"
+                            }}>
+                                Sign Up here
+                            </Text>
+                        </Pressable>
+                    </View>
+
+                    <View>
+                        <Button icon="login" mode="contained"
+                            onPress={LoginApp}
+                            contentStyle={{ flexDirection: "row-reverse" }}
+                            loading={loading ? true : false}
+                            style={styles.BtnStyle}>
+                            Login
+                        </Button>
+                    </View>
                 </View>
             </View>
-        </View>
-        // </ImageBackground>
+        </ImageBackground>
     )
 }
 

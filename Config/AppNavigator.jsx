@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SplashScreen from '../Components/SplashScreen';
 import Login from '../Components/Login/Login';
-import SignUp from '../Components/SignUp';
+import SignUp from '../Components/SignUp/SignUp';
 import GotoWhere from './GotoWhere';
 import Form from '../Components/Form/Form';
 import BottomNav from './CurvedBottom';

@@ -20,6 +20,30 @@ function Profile() {
     const [ImgFile, setImgFile] = useState("")
     const [ShowProgress, setShowProgress] = useState(false)
     const [ProgressVal, setProgressVal] = useState(10)
+
+    useEffect(() => {
+        getData()
+    }, [])
+    const getData = async () => {
+        const userId = await AsyncStorage.getItem("userId")
+        setUserId(userId)
+        // console.log(userId)
+        // let ID =JSON.parse(userId)
+        await firestore().collection('Users').doc((userId)).get().then((res) => {
+            console.log("userDATA", res?._data?.Email)
+            setProfile(res?._data)
+            setName(res?._data?.Name)
+            setEmail(res?._data?.Email)
+            setPassword(res?._data?.Password)
+            setImgFile(res?._data?.ProfImg)
+        }).catch((err) => {
+            console.log(err)
+        })
+        console.log("Profile", Profile)
+
+    }
+
+    // For Gallery
     const OpenGallery = async () => {
         console.log("open Gallery")
         const options = {
@@ -109,14 +133,15 @@ function Profile() {
     }
 
     const updateProfile = () => {
-        console.log(ImgFile)
-        if (Password.length > 5) {
+        // console.log(ImgFile)
+        if (Password?.length > 5 || Profile?.emailVerified == true) {
             setloading(true)
             firestore().collection("Users").doc(UserId).update({
                 Name: Name,
                 Email: Email,
-                Password: Password,
-                Img: ImgFile
+                Password: !Profile?.emailVerified && Password,
+                Img: ImgFile,
+                emailVerified: Profile?.emailVerified
                 // key: res.user.uid
             }).then(() => {
                 Snackbar.show({
@@ -154,39 +179,11 @@ function Profile() {
         }
     }
 
-    useEffect(() => {
-        //   const dbref = 
-        getData()
-    }, [])
-    const getData = async () => {
-        const userId = await AsyncStorage.getItem("userId")
-        setUserId(userId)
-        // console.log(userId)
-        // let ID =JSON.parse(userId)
-        const userDocument = await firestore().collection('Users').doc((userId)).get().then((res) => {
-            console.log("userDATA", res?._data?.Email)
-            setProfile(res?._data)
-            setName(res?._data?.Name)
-            setEmail(res?._data?.Email)
-            setPassword(res?._data?.Password)
-            setImgFile(res?._data?.Img)
-            console.log("Profile", Profile)
-        }).catch((err) => {
-            console.log(err)
-        })
-
-    }
 
     // Modal Data
     const [visible, setVisible] = React.useState(false);
-    // const [value, setValue] = React.useState('');
-    // if (value) {
-    //     setVisible(false)
-    // }
-    // console.log(value)
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
-    // const containerStyle = 
     const handleChoice = (text) => {
         setVisible(false)
         if (text == "camera") {
@@ -283,7 +280,7 @@ function Profile() {
                     <View>
                         <Button
                             icon="folder" mode="contained"
-                            style={{ marginTop: 70, color: "white", backgroundColor: "#2B29A6" }}
+                            style={{ marginTop: 70, color: "white", backgroundColor: "#0574B9" }}
                             loading={loading ? true : false}
                             onPress={() => updateProfile()}
                         >

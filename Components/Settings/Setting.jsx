@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native'
 import { Button, Text } from 'react-native-paper'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import auth from '@react-native-firebase/auth';
@@ -29,28 +29,47 @@ function Setting({ navigation }) {
     const [showDetail, setshowDetail] = useState(false)
     const [combinedData, setcombinedData] = useState([])
     const [fiterDetails, setfiterDetails] = useState([])
+    // const [allRquests, setallRquests] = useState([])
+    const [myRequest, setmyRequest] = useState([])
     useEffect(() => {
         allDetails()
 
-    }, [])
+    }, [showDetail])
 
     const allDetails = async () => {
+        const userId = await AsyncStorage.getItem("userId")
+
+        console.log("userId", userId)
 
         const policy = await firestore().collection('Privacy_Policy').get();
         const terms = await firestore().collection('Terms_Condition').get();
         const About = await firestore().collection('About').get();
+        const Requests = await firestore().collection('Requests').get();
+        // console.log("allPosts", allPosts._docs)
 
+
+        const filterMyReq = Requests?._docs.filter((doc) => doc?._data?.userId == userId)
+
+        // console.log("filterMyReq", filterMyReq)
+        filterMyReq?.map((post) => {
+            // console.log("req", post?._data)
+
+
+            // console.log("req", post)
+            // console.log("posts", post)
+        })
+
+        setmyRequest(filterMyReq)
         const combinedData = [
+            { ...filterMyReq, name: "All Requests" },
             { ...policy._docs[0]._data, name: "Privacy Policy" },
             { ...terms._docs[0]._data, name: "Terms & Conditions" },
-            { ...About._docs[0]._data, name: "About Saylani" }
+            { ...About._docs[0]._data, name: "About Saylani" },
         ]
         setcombinedData(combinedData)
         // const combinedData = [policy._docs[0]._data, terms._docs[0]._data, About._docs[0]._data]
         // Log the combined object
-        console.log("combinedData", combinedData);
-
-
+        // console.log("combinedData", combinedData);
 
 
         // console.log("policy._docs", policy._docs[0]._data)
@@ -59,7 +78,7 @@ function Setting({ navigation }) {
     }
 
     const gotoSettingDetail = (name) => {
-        console.log("lcikde")
+        // console.log("lcikde")
         setshowDetail(true)
         const filter = combinedData.filter((item) => item.name === name)
         setfiterDetails(filter)
@@ -83,14 +102,16 @@ function Setting({ navigation }) {
         // LoginCheck()
     }
     return (
-        <View >
+        <View style={{
+            padding: 10,
+            // borderBlockColor: "black",
+            // borderWidth: 1,
+            height: `90%`,
+            display: "flex",
+            justifyContent: "space-between"
+        }}>
             {!showDetail &&
-                <View style={{
-                    padding: 10,
-                    // borderBlockColor: "black",
-                    // borderWidth: 1,
-                    height: `90%`
-                }}>
+                <View >
 
                     <View>
                         <Text style={styles.heading}>
@@ -101,9 +122,9 @@ function Setting({ navigation }) {
                     <View>
                         {combinedData?.map((item, index) => {
                             return (
-                                <Pressable onPress={() => gotoSettingDetail(item.name)} >
+                                <Pressable onPress={() => gotoSettingDetail(item.name)} key={index} >
 
-                                    <View style={styles.settingBar} key={index}>
+                                    <View style={styles.settingBar} >
                                         <View>
                                             <Text style={{ fontSize: 16 }}>
                                                 {item?.name}
@@ -120,9 +141,10 @@ function Setting({ navigation }) {
                     </View>
 
                     <View style={{
-                        position: "absolute",
-                        bottom: 0,
-                        left: 10,
+                        // position: "absolute",
+                        // bottom: 60,
+                        // left: 10,
+                        marginTop: 150,
                         width: `100%`,
                         // borderBlockColor: "black",
                         // borderWidth: 1,
@@ -135,10 +157,17 @@ function Setting({ navigation }) {
                             Logout
                         </Button>
                     </View>
-                </View>}
-
-            {showDetail && <SettingDetails details={fiterDetails[0]} navigation={navigation} />}
+                </View>
+            }
+            <ScrollView style={{ height: `90%` }}>
+                {showDetail &&
+                    <SettingDetails
+                        details={fiterDetails}
+                        myRequest={myRequest}
+                        navigation={navigation} />}
+            </ScrollView>
         </View>
+
     )
 }
 

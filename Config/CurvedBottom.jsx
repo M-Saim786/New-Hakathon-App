@@ -59,7 +59,6 @@ export default function BottomNav({ navigation }) {
 
     const refRBSheet = useRef();
     const handleChoice = (text) => {
-        // setVisible(false)
         if (text == "Donate") {
             // return Form
             navigation.navigate("Form", {

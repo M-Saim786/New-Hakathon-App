@@ -3,9 +3,10 @@ import { Image, ScrollView, StyleSheet, View } from 'react-native'
 import { Avatar, Text } from 'react-native-paper'
 import Icon from "react-native-vector-icons/AntDesign"
 // import Video from 'react-native-video';
+import VideoPlayer from 'react-native-video-controls';
 
 
-function PostCards({ title, desc, img }) {
+function PostCards({ title, desc, img, videoUrl }) {
     return (
         // <ScrollView>
         <View style={styles.mainPost}>
@@ -43,20 +44,38 @@ function PostCards({ title, desc, img }) {
                     </View>
                     <View style={{
                         // height: `${desc?.length < 4 ? 10 : 100}`,
-                        borderBlockColor: "black",
-                        borderWidth: 1
+                        // borderBlockColor: "black",
+                        // borderWidth: 1
                     }}>
                         <Text style={styles.desc}>
                             {/* {desc && desc} */}
-                            {desc?.length > 10 ? desc?.slice(0, 10) + " See More..." : desc}
+                            {desc?.length > 30 ? desc?.slice(0, 30) + " See More..." : desc}
                             {/* {desc?.length > 10 ? desc?.slice(0, 10) + "See More" : desc} */}
                         </Text>
                     </View>
 
-                    <View>
-                        <Image source={{ uri: `${img && img}` }} style={{ height: 200, width: 300 }} />
-                    </View>
-
+                    {img !== null && img !== undefined && (<View>
+                        <Image source={{ uri: `${img}` }} style={{ height: 200, width: `100%`, objectFit: "contain" }} />
+                    </View>)}
+                    
+                    {videoUrl !== null && videoUrl !== undefined && (
+                        <Text style={{
+                            width: `100%`, height: 200,
+                            // borderBlockColor: "black", borderWidth: 1,
+                            objectFit: "contain",
+                            textAlign: "center"
+                        }}>
+                            <VideoPlayer
+                                source={{ uri: videoUrl }}
+                                // source={require("../../assets/mBaWAJWaFaTob9jZ.mp4")}
+                                navigator={null}
+                                // scrubbing={10}
+                                controlAnimationTiming={1000}
+                                tapAnywhereToPause={true}
+                                style={{ width: `100%`, height: 200 }}
+                            />
+                        </Text>
+                    )}
 
                 </View>
             </View>

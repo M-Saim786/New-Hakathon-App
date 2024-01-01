@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Dimensions, ScrollView, StyleSheet } from 'react-native'
+import { View, Dimensions, ScrollView, StyleSheet, KeyboardAvoidingView } from 'react-native'
 import { Avatar, Badge, Button, Text, TextInput, Modal, Portal, PaperProvider, RadioButton } from 'react-native-paper'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import SelectDropdown from 'react-native-select-dropdown'
@@ -9,25 +9,44 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker'
 import storage from '@react-native-firebase/storage'
 import * as Progress from 'react-native-progress';
-
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const countries = ["Egypt", "Canada", "Australia", "Ireland"]
-function MainForm({ itemId, navigation, type }) {
-    console.log(itemId)
+function MainForm({ navigation, type }) {
+    // console.log(itemId)
+
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        { label: 'Medical', value: 'medical' },
+        { label: 'Money/Rupees', value: 'money' },
+        { label: 'Cloths', value: 'cloths' },
+        { label: 'Education', value: 'education' },
+    ]);
+    const [gender, setGender] = useState(null)
+    const [openGender, setopenGender] = useState(false)
+    const [selectGender, setselectGender] = useState([
+        { label: 'Male', value: 'male' },
+        { label: 'Female', value: 'feMale' },
+
+    ])
     // const itemId = itemId;
     // const { itemId } = route.params;
     // const [secureText, setsecureText] = useState(true)
     const [Name, setName] = useState("")
-    const [Email, setEmail] = useState("")
-    const [Password, setPassword] = useState("")
+    const [Cnic, setCnic] = useState(null)
+    const [PhoneNum, setPhoneNum] = useState(null)
+    const [ImgFile, setImgFile] = useState(null)
+
+    // const [Email, setEmail] = useState("")
+    // const [Password, setPassword] = useState("")
     const [Title, setTitle] = useState("")
     const [Desc, setDesc] = useState("")
     // const [, set] = useState(second)
     const [loading, setloading] = useState(false)
     // const [secureText, setsecureText] = useState(true)
-    const [Profile, setProfile] = useState([])
-    const [UserId, setUserId] = useState("")
-    const [ImgFile, setImgFile] = useState("")
+    // const [Profile, setProfile] = useState([])
+    // const [UserId, setUserId] = useState("")
     const [ShowProgress, setShowProgress] = useState(false)
     const [ProgressVal, setProgressVal] = useState(10)
     const OpenGallery = async () => {
@@ -122,9 +141,9 @@ function MainForm({ itemId, navigation, type }) {
     const addRequest = async () => {
         const userId = await AsyncStorage.getItem("userId")
         console.log(ImgFile)
-        if (!Title || !Desc) {
+        if (!Name || !Cnic || !PhoneNum || !gender || !items) {
             Snackbar.show({
-                text: 'Title & Desc cannot be Null..',
+                text: 'Required Fields cannot be Null..',
                 duration: Snackbar.LENGTH_SHORT,
                 action: {
                     text: 'Ok',
@@ -137,21 +156,21 @@ function MainForm({ itemId, navigation, type }) {
         else {
             setloading(true)
             firestore().collection("Requests").add({
-                title: Title,
-                 desc: Desc,
-                  status: "request", 
-                  type: type,
+                name: Name,
+                // desc: Desc,
+                status: "request",
+                type: type,
                 createdAt: new Date().toLocaleString(), // Corrected this line
                 userId: userId,
-                requestImg :ImgFile,
-                Phone:"",
-                Cnic:"",
-                gender:"",
-
+                requestImg: ImgFile,
+                Phone: PhoneNum,
+                Cnic: Cnic,
+                gender: gender,
+                mainType: value,
 
             }).then(() => {
                 Snackbar.show({
-                    text: 'Updated Successfully..!',
+                    text: 'Request Submitted Successfully..!',
                     duration: Snackbar.LENGTH_SHORT,
                     action: {
                         text: 'Ok',
@@ -198,124 +217,150 @@ function MainForm({ itemId, navigation, type }) {
     const screenWidth = Dimensions.get("window").width
     return (
         <ScrollView>
-            {ShowProgress && <Progress.Bar progress={ProgressVal} width={screenWidth} />}
-            <View style={styles.mainDiv}>
-                <View>
+            <>
+                {ShowProgress && <Progress.Bar progress={ProgressVal} width={screenWidth} />}
+                <View style={styles.mainDiv}>
 
                     <View style={{
                         flexDirection: "row",
                         alignItems: "center",
-
-                        justifyContent: "center"
+                        justifyContent: "center",
+                        // borderBlockColor: "black",
+                        // borderWidth: 1
                     }}>
                         <View style={{ textAlign: "center" }}>
                             <Text style={styles.heading}>
-                                {itemId} Form
+                                {type} Form
                             </Text>
                         </View>
                         <View style={{ position: "absolute", right: 0, padding: 20 }}>
                             <Icon color="#E75C62" name='close' style={{ fontSize: 25, }} onPress={() => navigation.navigate("Home")} />
                         </View>
                     </View>
-                    {/* <View>
-                        <SelectDropdown
-                            data={countries}
-                            onSelect={(selectedItem, index) => {
-                                console.log(selectedItem, index)
-                            }}
-                            buttonStyle={{ borderBlockColor: "black", borderWidth: 1 }}
-                            buttonTextAfterSelection={(selectedItem, index) => {
-                                // text represented after item is selected
-                                // if data array is an array of objects then return selectedItem.property to render after item is selected
-                                return selectedItem ? selectedItem : "Select Category"
-                            }}
-                            rowTextForSelection={(item, index) => {
-                                // text represented for each item in dropdown
-                                // if data array is an array of objects then return item.property to represent item in dropdown
-                                return item
-                            }}
-                            renderDropdownIcon={()=>{
-                                return(
-                                    <Icon name="chevron-up" size={20} />
-                                )
-                            }}
-                        />
-                    </View> */}
-                </View>
-                <View>
-                    <View style={styles.avatar}>
-                        <Avatar.Image
-                            size={140}
-                            color="white"
-                            source={{
-                                uri: `${!ImgFile ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbXlpRoY6yMdNaajjIrz4mhtkt2YTuXJhvYw&usqp=CAU" : ImgFile}`
-                            }}
-                            style={{
-                                resizeMode: 'contain',
-                                // marginLeft:`50%` 
 
-                            }}
-                        />
-                        <Badge size={30} style={{
-                            backgroundColor: "white", color: "black", borderColor: "black",
-                            borderWidth: 1,
-                            position: "absolute",
-                            right: 110,
-                            bottom: 0
-                        }}
-                            onPress={showModal}
-                        >
-                            <Icon name="pencil" size={20} />
-                        </Badge>
-                        <PaperProvider style={{ position: 'absolute', zIndex: 0 }}>
-                            <Portal style={{ position: 'absolute', zIndex: 0 }}>
-                                <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modal}>
-                                    <RadioButton.Group onValueChange={handleChoice} >
-                                        <RadioButton.Item label="Open Gallery" value="gallery"
-                                        />
-                                        <RadioButton.Item label="Open Camera" value="camera" />
-                                    </RadioButton.Group>
-                                </Modal>
-                            </Portal>
-                        </PaperProvider>
 
-                    </View>
-                    <View style={{ marginTop: 30 }}>
-
-                        <TextInput
-                            label="Title"
-                            mode='outlined'
-                            placeholder='Enter Your Title'
-                            value={Title}
-                            onChangeText={text => setTitle(text)}
-                            right={<TextInput.Icon icon="account" />}
-                            style={{ marginTop: 20 }}
-                        />
-                        <TextInput
-                            label="Description"
-                            mode='outlined'
-                            placeholder='Enter Your Description'
-                            value={Desc}
-                            onChangeText={text => setDesc(text)}
-                            right={<TextInput.Icon icon="order-bool-descending-variant" />}
-                            style={{ marginTop: 20, }}
-                            numberOfLines={5}
-                            multiline={true}
-                        />
-
-                    </View>
                     <View>
-                        <Button
-                            icon="folder" mode="contained"
-                            style={{ marginTop: 70, color: "white", backgroundColor: "#0574B9" }}
-                            loading={loading ? true : false}
-                            onPress={() => addRequest()}
-                        >
-                            Submit Request
-                        </Button>
+                        <View style={styles.avatar}>
+                            <Avatar.Image
+                                size={140}
+                                color="white"
+                                source={{
+                                    uri: `${!ImgFile ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRbXlpRoY6yMdNaajjIrz4mhtkt2YTuXJhvYw&usqp=CAU" : ImgFile}`
+                                }}
+                                style={{
+                                    resizeMode: 'contain',
+                                    // marginLeft:`50%` 
+
+                                }}
+                            />
+                            <Badge size={30} style={{
+                                backgroundColor: "white", color: "black", borderColor: "black",
+                                borderWidth: 1,
+                                position: "absolute",
+                                right: 90,
+                                bottom: 0
+                            }}
+                                onPress={showModal}
+                            >
+                                <Icon name="pencil" size={20} />
+                            </Badge>
+                            <PaperProvider style={{ position: 'absolute', zIndex: 0 }}>
+                                <Portal style={{ position: 'absolute', zIndex: 0 }}>
+                                    <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modal}>
+                                        <RadioButton.Group onValueChange={handleChoice} >
+                                            <RadioButton.Item label="Open Gallery" value="gallery"
+                                            />
+                                            <RadioButton.Item label="Open Camera" value="camera" />
+                                        </RadioButton.Group>
+                                    </Modal>
+                                </Portal>
+                            </PaperProvider>
+
+                        </View>
+                        <View>
+
+                            <TextInput
+                                label="Applicant Name"
+                                mode='outlined'
+                                placeholder='Applicant Name'
+                                value={Name}
+                                onChangeText={text => setName(text)}
+                                right={<TextInput.Icon icon="account" />}
+                                style={{ marginTop: 20 }}
+                            />
+                            <TextInput
+                                label="Applicant CNIC"
+                                mode='outlined'
+                                placeholder='CNIC without "-"  xxxxxxxxxxxxx'
+                                value={Cnic}
+                                onChangeText={text => {
+                                    if (text.length <= 13) {
+                                        setCnic(text);
+                                    }
+                                }}
+                                right={<TextInput.Icon icon="card-account-details-outline" />}
+                                style={{ marginTop: 10, }}
+                                keyboardType="numeric"
+                            />
+                            <TextInput
+                                label="Applicant Phone"
+                                mode='outlined'
+                                placeholder='Applicant Phone'
+                                value={PhoneNum}
+                                onChangeText={text => {
+                                    if (text.length <= 11) {
+                                        setPhoneNum(text);
+                                    }
+                                }}
+                                right={<TextInput.Icon icon="phone" />}
+                                style={{ marginTop: 10, }}
+                                keyboardType='numeric'
+                            />
+                            <View style={{ flexDirection: "row", display: "flex", justifyContent: "space-between" }}>
+                                <View style={{ width: `48%` }}>
+                                    <DropDownPicker
+                                        open={openGender}
+                                        value={gender}
+                                        items={selectGender}
+                                        setOpen={setopenGender}
+                                        setValue={setGender}
+                                        setItems={setselectGender}
+                                        style={{
+                                            marginTop: 10, zIndex: 1,
+                                        }}
+                                        placeholder="Select Gender"
+                                    />
+                                </View>
+                                <View style={{ width: `48%` }}>
+                                    <DropDownPicker
+                                        open={open}
+                                        value={value}
+                                        items={items}
+                                        setOpen={setOpen}
+                                        setValue={setValue}
+                                        setItems={setItems}
+                                        style={{ marginTop: 10, }}
+                                        placeholder="Select Type"
+
+                                    />
+                                </View>
+                            </View>
+                        </View>
+
+
+                        <View>
+                            <Button
+                                icon="hand-heart-outline" mode="contained"
+                                style={{ marginTop: 110, color: "white", backgroundColor: "#0574B9", borderRadius: 5 }}
+                                loading={loading ? true : false}
+                                onPress={() => addRequest()}
+                            >
+                                Submit Request
+                            </Button>
+                        </View>
                     </View>
                 </View>
-            </View>
+            </>
         </ScrollView>
     )
 }
@@ -327,7 +372,7 @@ const styles = StyleSheet.create({
     heading: {
         textAlign: "center",
         fontSize: 25,
-        margin: 20,
+        margin: 0,
         fontFamily: "Quicksand-Medium",
         // borderBlockColor: "black",
         // borderWidth: 1
@@ -339,7 +384,7 @@ const styles = StyleSheet.create({
         // borderWidth: 1
     },
     avatar: {
-        // margin: 0,
+        margin: 30,
         // padding: 0,
         // borderBlockColor: "black",
         // borderWidth: 1,

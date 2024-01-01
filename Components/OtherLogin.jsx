@@ -4,7 +4,7 @@ import { Image, ImageBackground, Pressable, StyleSheet, Text, View, TouchableOpa
 import { Button, } from 'react-native-paper'
 import { TextInput } from 'react-native-paper';
 import Snackbar from 'react-native-snackbar';
-// import firestore from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
 // import database from '@react-native-firebase/database';
 import auth from "@react-native-firebase/auth"
 import AsyncStorage from "@react-native-async-storage/async-storage"
@@ -16,7 +16,7 @@ import {
 } from '@react-native-google-signin/google-signin';
 
 
-function OtherLogin() {
+function OtherLogin({ navigation }) {
     const GoogleRegister = async () => {
         console.log("google")
 
@@ -36,8 +36,27 @@ function OtherLogin() {
             const { idToken } = await GoogleSignin.signIn();
             console.log("userInfo", userInfo)
             const googleCredentials = auth.GoogleAuthProvider.credential(idToken);
-            await auth().signInWithCredential(googleCredentials);
-            navigation.navigate("Main")
+            await auth().signInWithCredential(googleCredentials).then(async (user) => {
+                console.log("google user", user)
+                // console.log("google user uid", user.user.uid)
+                // console.log("google user email", user.user.email)
+                // console.log("google user name", user.user.displayName)
+                // console.log("google user photoURL", user.user.photoURL)
+                await AsyncStorage.setItem("userId", user.user.uid)
+
+                await firestore().collection("Users").doc(user.user.uid).set({
+                    Name: user.user.displayName,
+                    Email: user.user.email,
+                    key: user.user.uid,
+                    ProfImg: user.user.photoURL,
+                    role: "user",
+                    emailVerified: user.user.emailVerified
+                })
+                navigation.navigate("Main")
+
+            }).catch((err) => {
+                console.log("Error", err.message)
+            })
             return userInfo;
             // setState({ userInfo });
         } catch (error) {
@@ -120,7 +139,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         margin: 20,
 
-    },  otherLoginImg: {
+    }, otherLoginImg: {
         width: 40,
         height: 40,
         display: "flex",

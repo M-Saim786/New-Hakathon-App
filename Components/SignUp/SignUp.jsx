@@ -6,8 +6,8 @@ import auth from "@react-native-firebase/auth"
 import firestore from "@react-native-firebase/firestore"
 import Snackbar from 'react-native-snackbar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GoogleSignin, statusCodes, } from '@react-native-google-signin/google-signin';
-import OtherLogin from './OtherLogin';
+// import { GoogleSignin, statusCodes, } from '@react-native-google-signin/google-signin';
+import OtherLogin from '../OtherLogin';
 // import { AsyncStorage } from "react-native"
 function SignUp({ navigation }) {
 
@@ -122,80 +122,78 @@ function SignUp({ navigation }) {
 
 
     return (
-        // <ImageBackground source={require("../assets/Images/SignUp.png")} style={{ width: `100%`, height: `100%`, }} >
+        <ImageBackground source={require("../../assets/Images/bgImg.png")} style={{ width: `100%`, height: `100%`, }} >
 
-        <View style={styles.loginDiv} >
-            <View style={styles.innerDiv}>
-                <View>
-                    <Text style={styles.heading}>
-                        Sign Up..!
-                    </Text>
-                </View>
-                <View style={styles.mainDiv}>
-                    <TextInput
-                        label="Name"
-                        mode='outlined'
-                        placeholder='Enter Your Name'
-                        value={Name}
-                        onChangeText={text => setName(text)}
-                        right={<TextInput.Icon icon="account" />}
-
-                    />
-                    <TextInput
-                        label="Email"
-                        mode='outlined'
-                        placeholder='Enter Your Email'
-                        value={Email}
-                        onChangeText={text => setEmail(text)}
-                        right={<TextInput.Icon icon="email" />}
-                        style={{ marginTop: 20 }}
-                    />
-                    <TextInput
-                        label="Password"
-                        placeholder='Enter Your Password'
-                        mode='outlined'
-                        right={secureText ?
-                            <TextInput.Icon icon="eye" onPress={() => setsecureText(false)} /> :
-                            <TextInput.Icon icon="eye-off" onPress={() => setsecureText(true)} />
-                        }
-                        secureTextEntry={secureText}
-                        style={{ marginTop: 20 }}
-                        value={Password}
-                        onChangeText={text => setPassword(text)}
-                    />
-                </View>
-
-                <OtherLogin />
-
-                <View style={styles.signUpHere}>
-                    <Text style={{ marginRight: 10, fontFamily: "Quicksand-Medium" }}>
-                        Don't have account
-                    </Text>
-                    <Pressable
-                        onPress={() => navigation.navigate("login")}
-                    >
-                        <Text style={{
-                            color: "#8EC647",
-                            fontFamily: "Quicksand-Bold"
-                        }}>
-                            Login here
+            <View style={styles.loginDiv} >
+                <View style={styles.innerDiv}>
+                    <View>
+                        <Text style={styles.heading}>
+                            Sign Up..!
                         </Text>
-                    </Pressable>
-                </View>
+                    </View>
+                    <View style={styles.mainDiv}>
+                        <TextInput
+                            label="Name"
+                            mode='outlined'
+                            placeholder='Enter Your Name'
+                            value={Name}
+                            onChangeText={text => setName(text)}
+                            right={<TextInput.Icon icon="account" />}
 
-                <View>
-                    <Button icon="login" mode="contained"
-                        onPress={() => Sign_Up()}
-                        loading={loading ? true : false}
-                        style={{ marginTop: 25, color: "white", backgroundColor: "#0574B9" }}>
-                        Sign Up
-                    </Button>
+                        />
+                        <TextInput
+                            label="Email"
+                            mode='outlined'
+                            placeholder='Enter Your Email'
+                            value={Email}
+                            onChangeText={text => setEmail(text)}
+                            right={<TextInput.Icon icon="email" />}
+                            style={{ marginTop: 20 }}
+                        />
+                        <TextInput
+                            label="Password"
+                            placeholder='Enter Your Password'
+                            mode='outlined'
+                            right={secureText ?
+                                <TextInput.Icon icon="eye" onPress={() => setsecureText(false)} /> :
+                                <TextInput.Icon icon="eye-off" onPress={() => setsecureText(true)} />
+                            }
+                            secureTextEntry={secureText}
+                            style={{ marginTop: 20 }}
+                            value={Password}
+                            onChangeText={text => setPassword(text)}
+                        />
+                    </View>
+
+                    <OtherLogin navigation={navigation} />
+
+                    <View style={styles.signUpHere}>
+                        <Text style={{ marginRight: 10, fontFamily: "Quicksand-Medium" }}>
+                            Don't have account
+                        </Text>
+                        <Pressable
+                            onPress={() => navigation.navigate("login")}
+                        >
+                            <Text style={{
+                                color: "#8EC647",
+                                fontFamily: "Quicksand-Bold"
+                            }}>
+                                Login here
+                            </Text>
+                        </Pressable>
+                    </View>
+
+                    <View>
+                        <Button icon="login" mode="contained"
+                            onPress={() => Sign_Up()}
+                            loading={loading ? true : false}
+                            style={{ marginTop: 25, color: "white", backgroundColor: "#0574B9" }}>
+                            Sign Up
+                        </Button>
+                    </View>
                 </View>
             </View>
-        </View>
-
-
-        // </ImageBackground >
+        </ImageBackground>
 
     )
 }

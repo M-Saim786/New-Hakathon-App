@@ -35,11 +35,10 @@ function Form({ route, navigation }) {
         // <ScrollView>
         <View style={{ height: `100%`, }}>
 
-            {visible ?
+            {/* {visible ?
                 <PaperProvider >
                     <Portal>
                         <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={containerStyle}>
-                            {/* <View> */}
                             <View style={{
                                 flexDirection: "row",
                                 justifyContent: "center"
@@ -62,16 +61,19 @@ function Form({ route, navigation }) {
                                     )
                                 })}
                             </View>
-                            {/* </View> */}
                         </Modal>
                     </Portal>
 
-                </PaperProvider> : <MainForm itemId={
-                    itemId == "Donation" ?
-                        `Donate ${filterCategory[0]?.name}` :
-                        `Request ${filterCategory[0]?.name}`} type={itemId} 
-                        navigation={navigation}
-                        />}
+                </PaperProvider> 
+                :"" } */}
+            <MainForm
+                // itemId={
+                // itemId == "Donation" ?
+                //     `Donate ${filterCategory[0]?.name}` :
+                //     `Request ${filterCategory[0]?.name}`} 
+                type={itemId}
+                navigation={navigation}
+            />
         </View >
         // </ScrollView>
     )
