@@ -1,29 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import React, { useEffect, useState } from 'react'
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native'
-import { Button, Text } from 'react-native-paper'
+import { ActivityIndicator, Button, Text } from 'react-native-paper'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import auth from '@react-native-firebase/auth';
 import SettingDetails from './SettingDetails'
 import firestore from '@react-native-firebase/firestore';
 
-// const data = [
-//     {
-//         title: "About",
-//         desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit culpa fugit ratione, nisi dolor libero consequuntur distinctio eius veniam officia praesentium, odio corporis! Eum nisi saepe rem adipisci atque quo nobis quod delectus quia aspernatur maxime optio, quidem reiciendis a?",
 
-//     },
-//     {
-//         title: "About",
-//         desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit culpa fugit ratione, nisi dolor libero consequuntur distinctio eius veniam officia praesentium, odio corporis! Eum nisi saepe rem adipisci atque quo nobis quod delectus quia aspernatur maxime optio, quidem reiciendis a?",
-
-//     },
-//     {
-//         title: "About",
-//         desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit culpa fugit ratione, nisi dolor libero consequuntur distinctio eius veniam officia praesentium, odio corporis! Eum nisi saepe rem adipisci atque quo nobis quod delectus quia aspernatur maxime optio, quidem reiciendis a?",
-
-//     },
-// ]
 function Setting({ navigation }) {
 
     const [showDetail, setshowDetail] = useState(false)
@@ -51,14 +35,6 @@ function Setting({ navigation }) {
 
         const filterMyReq = Requests?._docs.filter((doc) => doc?._data?.userId == userId)
 
-        // console.log("message._docs[0]._data", message._docs[0]._data)
-        // filterMyReq?.map((post) => {
-        //     console.log("req", post?._data)
-
-
-        //     // console.log("req", post)
-        //     // console.log("posts", post)
-        // })
 
         setmyRequest(filterMyReq)
         const combinedDatas = [
@@ -69,29 +45,31 @@ function Setting({ navigation }) {
             { ...About?._docs[0]?._data, name: "About Saylani" },
         ]
         setcombinedData(combinedDatas)
-        // const combinedData = [policy._docs[0]._data, terms._docs[0]._data, About._docs[0]._data]
-        // Log the combined object
-        // console.log("combinedData", combinedData);
 
 
         // console.log("policy._docs", policy._docs[0]._data)
         // console.log("terms._docs", terms._docs[0]._data)
         // console.log("About._docs", About._docs[0]._data)
     }
-
+    const [showTable, setshowTable] = useState(false)
     const gotoSettingDetail = (name) => {
         // console.log("lcikde")
         setshowDetail(true)
         const filter = combinedData.filter((item) => item.name === name)
-        setfiterDetails(filter)
-        console.log("filter", filter)
+        // console.log("daa", filter[0].name);
+        if (filter[0].name == "All Requests") {
+            setshowTable(true)
+        }
+        else {
+            setfiterDetails(filter)
+            console.log("filter", filter)
+        }
+
+        // setfiterDetails(filter)
     }
 
 
     const LogoutApp = async () => {
-        // console.log("clicked")
-        // AsyncStorage.removeItem("userId")
-        // console.log('Navigation:', navigation); // Add this line
 
         await auth()
             .signOut()
@@ -101,7 +79,6 @@ function Setting({ navigation }) {
                 console.log('Navigation:', navigation); // Add this line
                 navigation.replace('login');
             });
-        // LoginCheck()
     }
     return (
         <View style={{
@@ -122,7 +99,7 @@ function Setting({ navigation }) {
                     </View>
 
                     <View>
-                        {combinedData?.map((item, index) => {
+                        {combinedData.length > 0 ? combinedData?.map((item, index) => {
                             // console.log("item", item)
                             return (
                                 <Pressable onPress={() => gotoSettingDetail(item.name)} key={index}>
@@ -138,7 +115,11 @@ function Setting({ navigation }) {
                                     </View>
                                 </Pressable>
                             )
-                        })
+                        }) : <>
+                            <View style={{ marginTop: 30 }}>
+                                <ActivityIndicator animating={true} color={"#8CC540"} size="large" />
+                            </View>
+                        </>
                         }
                     </View>
 
@@ -166,7 +147,9 @@ function Setting({ navigation }) {
                     <SettingDetails
                         details={fiterDetails}
                         myRequest={myRequest}
-                        navigation={navigation} />}
+                        navigation={navigation}
+                        showTable={showTable}
+                    />}
             </ScrollView>
         </View>
 
