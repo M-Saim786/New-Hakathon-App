@@ -3,11 +3,11 @@ import React from 'react';
 // import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SplashScreen from '../Components/SplashScreen';
-import Login from '../Components/Login/Login';
-import SignUp from '../Components/SignUp/SignUp';
-import GotoWhere from './GotoWhere';
-import Form from '../Components/Form/Form';
+import SplashScreen from '../Screens/SplashScreen';
+import Login from '../Screens/Login/Login';
+import SignUp from '../Screens/SignUp/SignUp';
+// import GotoWhere from './GotoWhere';
+import Form from '../Screens/Form/Form';
 import BottomNav from './CurvedBottom';
 
 const Stack = createNativeStackNavigator();

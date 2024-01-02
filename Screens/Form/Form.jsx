@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import { View, Dimensions, ScrollView, StyleSheet } from 'react-native'
-import { Avatar, Badge, Button, Text, TextInput, Modal, Portal, PaperProvider, RadioButton, Menu } from 'react-native-paper'
-import Icon from "react-native-vector-icons/MaterialCommunityIcons"
+import React, { useState } from 'react'
+import { View, StyleSheet } from 'react-native'
+// import { Avatar, Badge, Button, Text, TextInput, Modal, Portal, PaperProvider, RadioButton, Menu } from 'react-native-paper'
+// import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 // import SelectDropdown from 'react-native-select-dropdown'
 import MainForm from './MainForm'
 // import Modal from "react-native-modal";

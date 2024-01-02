@@ -1,30 +1,42 @@
-import React from 'react'
-import { Image, ScrollView, StyleSheet, View } from 'react-native'
-import { Avatar, Text } from 'react-native-paper'
+import React, { useEffect, useState } from 'react'
+import { Image, StyleSheet, View } from 'react-native'
+import { Text } from 'react-native-paper'
 import Icon from "react-native-vector-icons/AntDesign"
 // import Video from 'react-native-video';
 import VideoPlayer from 'react-native-video-controls';
-
+import firestore from '@react-native-firebase/firestore';
 
 function PostCards({ title, desc, img, videoUrl }) {
+
+    const [Admin, setAdmin] = useState([])
+    const getAdmin = async () => {
+        const Users = await firestore().collection('Users').get()
+        const admin = Users?._docs?.filter((user) => user?._data?.role === "admin")
+        console.log("admin", admin[0]?._data)
+        setAdmin(admin[0]?._data)
+    }
+
+    useEffect(() => {
+        getAdmin()
+    }, [])
+
+
     return (
-        // <ScrollView>
         <View style={styles.mainPost}>
             <View>
-
                 <View style={styles.PostHeader}>
                     <View style={styles.subHeader}>
                         <View>
-                            <Image source={{ uri: "https://firebasestorage.googleapis.com/v0/b/mini-hakathon-f16b3.appspot.com/o/Images%2F1704000558702.jpg?alt=media&token=e4872b14-f4ca-416b-a0f8-21f2861f2746" }}
+                            {Admin?.ProfImg && (<Image source={{ uri: `${Admin?.ProfImg !== null || Admin?.ProfImg !== undefined ? Admin?.ProfImg : "https://firebasestorage.googleapis.com/v0/b/mini-hakathon-f16b3.appspot.com/o/PostImage%2Fimages.png?alt=media&token=a7796009-6d62-42c0-9aea-62fb7ebe29ad"}` }}
                                 style={styles.PostHeaderImg}
-                            />
+                            />)}
                         </View>
                         <View>
                             <Text>
-                                Useerm
+                                {Admin?.Name}
                             </Text>
                             <Text style={{ fontSize: 10 }}>
-                                saim12321
+                                {Admin?.Email}
                             </Text>
                         </View>
                     </View>
@@ -33,8 +45,6 @@ function PostCards({ title, desc, img, videoUrl }) {
                     </View>
                 </View>
 
-
-
                 <View style={styles.postBody}>
                     {/* <View style={{ height: `${desc?.length < 6 ? `20%` : `60%`}`, }}> */}
                     <View>
@@ -42,44 +52,38 @@ function PostCards({ title, desc, img, videoUrl }) {
                             {title && title}
                         </Text>
                     </View>
-                    <View style={{
-                        // height: `${desc?.length < 4 ? 10 : 100}`,
-                        // borderBlockColor: "black",
-                        // borderWidth: 1
-                    }}>
+                    <View>
                         <Text style={styles.desc}>
                             {/* {desc && desc} */}
                             {desc?.length > 30 ? desc?.slice(0, 30) + " See More..." : desc}
-                            {/* {desc?.length > 10 ? desc?.slice(0, 10) + "See More" : desc} */}
                         </Text>
                     </View>
 
                     {img !== null && img !== undefined && (<View>
                         <Image source={{ uri: `${img}` }} style={{ height: 200, width: `100%`, objectFit: "contain" }} />
                     </View>)}
-                    
-                    {videoUrl !== null && videoUrl !== undefined && (
+
+                    {videoUrl != null && (
+                        // {videoUrl !== null && videoUrl !== undefined && (
                         <Text style={{
-                            width: `100%`, height: 200,
-                            // borderBlockColor: "black", borderWidth: 1,
+                            width: '100%',
+                            height: 200,
+                            textAlign: 'center',
                             objectFit: "contain",
-                            textAlign: "center"
                         }}>
                             <VideoPlayer
-                                source={{ uri: videoUrl }}
-                                // source={require("../../assets/mBaWAJWaFaTob9jZ.mp4")}
+                                // source={require("../../assets/IolsZot_eke0YY9d.mp4")}
+                                source={{ uri: videoUrl && videoUrl }}
                                 navigator={null}
-                                // scrubbing={10}
                                 controlAnimationTiming={1000}
                                 tapAnywhereToPause={true}
-                                style={{ width: `100%`, height: 200 }}
+                                style={{ width: '100%', height: 200 }}
                             />
                         </Text>
-                    )}
 
+                    )}
                 </View>
             </View>
-
 
             <View style={styles.bottomBar}>
 
@@ -118,13 +122,10 @@ function PostCards({ title, desc, img, videoUrl }) {
             </View>
 
         </View>
-        // </ScrollView>
-
     )
 }
 
 export default PostCards
-
 
 const styles = StyleSheet.create({
     backgroundVideo: {

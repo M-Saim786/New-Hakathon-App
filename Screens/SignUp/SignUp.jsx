@@ -7,7 +7,7 @@ import firestore from "@react-native-firebase/firestore"
 import Snackbar from 'react-native-snackbar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 // import { GoogleSignin, statusCodes, } from '@react-native-google-signin/google-signin';
-import OtherLogin from '../OtherLogin';
+import OtherLogin from '../../Components/OtherLogin';
 // import { AsyncStorage } from "react-native"
 function SignUp({ navigation }) {
 

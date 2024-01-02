@@ -1,14 +1,12 @@
-// import React from 'react'
-import React, { useState } from 'react'
-import { Image, ImageBackground, Pressable, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import { Button, } from 'react-native-paper'
-import { TextInput } from 'react-native-paper';
+import React from 'react'
+import { Image, Pressable, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+// import { Button, } from 'react-native-paper'
 import Snackbar from 'react-native-snackbar';
 import firestore from '@react-native-firebase/firestore';
 // import database from '@react-native-firebase/database';
 import auth from "@react-native-firebase/auth"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-// import {  } from 'react-native-gesture-handler';
+
 import {
     GoogleSignin,
     // GoogleSigninButton,

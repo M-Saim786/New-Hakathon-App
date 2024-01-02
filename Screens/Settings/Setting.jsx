@@ -7,23 +7,23 @@ import auth from '@react-native-firebase/auth';
 import SettingDetails from './SettingDetails'
 import firestore from '@react-native-firebase/firestore';
 
-const data = [
-    {
-        title: "About",
-        desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit culpa fugit ratione, nisi dolor libero consequuntur distinctio eius veniam officia praesentium, odio corporis! Eum nisi saepe rem adipisci atque quo nobis quod delectus quia aspernatur maxime optio, quidem reiciendis a?",
+// const data = [
+//     {
+//         title: "About",
+//         desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit culpa fugit ratione, nisi dolor libero consequuntur distinctio eius veniam officia praesentium, odio corporis! Eum nisi saepe rem adipisci atque quo nobis quod delectus quia aspernatur maxime optio, quidem reiciendis a?",
 
-    },
-    {
-        title: "About",
-        desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit culpa fugit ratione, nisi dolor libero consequuntur distinctio eius veniam officia praesentium, odio corporis! Eum nisi saepe rem adipisci atque quo nobis quod delectus quia aspernatur maxime optio, quidem reiciendis a?",
+//     },
+//     {
+//         title: "About",
+//         desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit culpa fugit ratione, nisi dolor libero consequuntur distinctio eius veniam officia praesentium, odio corporis! Eum nisi saepe rem adipisci atque quo nobis quod delectus quia aspernatur maxime optio, quidem reiciendis a?",
 
-    },
-    {
-        title: "About",
-        desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit culpa fugit ratione, nisi dolor libero consequuntur distinctio eius veniam officia praesentium, odio corporis! Eum nisi saepe rem adipisci atque quo nobis quod delectus quia aspernatur maxime optio, quidem reiciendis a?",
+//     },
+//     {
+//         title: "About",
+//         desc: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit culpa fugit ratione, nisi dolor libero consequuntur distinctio eius veniam officia praesentium, odio corporis! Eum nisi saepe rem adipisci atque quo nobis quod delectus quia aspernatur maxime optio, quidem reiciendis a?",
 
-    },
-]
+//     },
+// ]
 function Setting({ navigation }) {
 
     const [showDetail, setshowDetail] = useState(false)
@@ -41,6 +41,7 @@ function Setting({ navigation }) {
 
         console.log("userId", userId)
 
+        const message = await firestore().collection('Chairman_Message').get();
         const policy = await firestore().collection('Privacy_Policy').get();
         const terms = await firestore().collection('Terms_Condition').get();
         const About = await firestore().collection('About').get();
@@ -50,23 +51,24 @@ function Setting({ navigation }) {
 
         const filterMyReq = Requests?._docs.filter((doc) => doc?._data?.userId == userId)
 
-        // console.log("filterMyReq", filterMyReq)
-        filterMyReq?.map((post) => {
-            // console.log("req", post?._data)
+        // console.log("message._docs[0]._data", message._docs[0]._data)
+        // filterMyReq?.map((post) => {
+        //     console.log("req", post?._data)
 
 
-            // console.log("req", post)
-            // console.log("posts", post)
-        })
+        //     // console.log("req", post)
+        //     // console.log("posts", post)
+        // })
 
         setmyRequest(filterMyReq)
-        const combinedData = [
+        const combinedDatas = [
             { ...filterMyReq, name: "All Requests" },
-            { ...policy._docs[0]._data, name: "Privacy Policy" },
-            { ...terms._docs[0]._data, name: "Terms & Conditions" },
-            { ...About._docs[0]._data, name: "About Saylani" },
+            { ...message?._docs[0]?._data, name: "Chairman Message" },
+            { ...policy?._docs[0]?._data, name: "Privacy Policy" },
+            { ...terms?._docs[0]?._data, name: "Terms & Conditions" },
+            { ...About?._docs[0]?._data, name: "About Saylani" },
         ]
-        setcombinedData(combinedData)
+        setcombinedData(combinedDatas)
         // const combinedData = [policy._docs[0]._data, terms._docs[0]._data, About._docs[0]._data]
         // Log the combined object
         // console.log("combinedData", combinedData);
@@ -87,9 +89,9 @@ function Setting({ navigation }) {
 
 
     const LogoutApp = async () => {
-        console.log("clicked")
+        // console.log("clicked")
         // AsyncStorage.removeItem("userId")
-        console.log('Navigation:', navigation); // Add this line
+        // console.log('Navigation:', navigation); // Add this line
 
         await auth()
             .signOut()
@@ -121,9 +123,9 @@ function Setting({ navigation }) {
 
                     <View>
                         {combinedData?.map((item, index) => {
+                            // console.log("item", item)
                             return (
-                                <Pressable onPress={() => gotoSettingDetail(item.name)} key={index} >
-
+                                <Pressable onPress={() => gotoSettingDetail(item.name)} key={index}>
                                     <View style={styles.settingBar} >
                                         <View>
                                             <Text style={{ fontSize: 16 }}>

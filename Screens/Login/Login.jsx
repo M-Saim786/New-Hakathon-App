@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, ImageBackground, Pressable, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { ImageBackground, Pressable, StyleSheet, Text, View, } from 'react-native'
 import { Button, } from 'react-native-paper'
 import { TextInput } from 'react-native-paper';
 import Snackbar from 'react-native-snackbar';
@@ -7,13 +7,8 @@ import Snackbar from 'react-native-snackbar';
 // import database from '@react-native-firebase/database';
 import auth from "@react-native-firebase/auth"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-// import {  } from 'react-native-gesture-handler';
-import {
-    GoogleSignin,
-    // GoogleSigninButton,
-    statusCodes,
-} from '@react-native-google-signin/google-signin';
-import OtherLogin from '../OtherLogin';
+import OtherLogin from '../../Components/OtherLogin';
+
 function Login({ navigation }) {
 
 
@@ -134,78 +129,6 @@ function Login({ navigation }) {
         }
     }
 
-    // const GoogleRegister = async () => {
-    //     console.log("google")
-
-    //     GoogleSignin.configure({
-    //         webClientId: '199722486764-paae0jedvochhv9tcoqgjpk3h1mc1853.apps.googleusercontent.com',
-    //         offlineAccess: true,
-    //         hostedDomain: '', // specifies a hosted domain restriction
-    //         forceCodeForRefreshToken: true, // [Android] related to `serverAuthCode`, read the docs link below *.
-    //         accountName: '', // [Android] specifies an account name on the device that should be used
-    //         googleServicePlistPath: '',
-    //         openIdRealm: '',
-    //         profileImageSize: 120,
-    //     });
-    //     try {
-    //         await GoogleSignin.hasPlayServices();
-    //         const userInfo = await GoogleSignin.signIn();
-    //         const { idToken } = await GoogleSignin.signIn();
-    //         console.log("userInfo", userInfo)
-    //         const googleCredentials = auth.GoogleAuthProvider.credential(idToken);
-    //         await auth().signInWithCredential(googleCredentials);
-    //         navigation.navigate("Main")
-    //         return userInfo;
-    //         // setState({ userInfo });
-    //     } catch (error) {
-    //         console.log("error", error)
-    //         if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-    //             Snackbar.show({
-    //                 text: "SignIn cancelled by user...",
-    //                 duration: Snackbar.LENGTH_SHORT,
-    //                 action: {
-    //                     text: 'Ok',
-    //                     textColor: 'green',
-    //                     onPress: () => { /* Do something. */ },
-    //                 },
-    //             });
-    //             // user cancelled the login flow
-    //         } else if (error.code === statusCodes.IN_PROGRESS) {
-    //             Snackbar.show({
-    //                 text: "SignIn already in progress...",
-    //                 duration: Snackbar.LENGTH_SHORT,
-    //                 action: {
-    //                     text: 'Ok',
-    //                     textColor: 'green',
-    //                     onPress: () => { /* Do something. */ },
-    //                 },
-    //             });
-    //             // operation (e.g. sign in) is in progress already
-    //         } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-    //             Snackbar.show({
-    //                 text: "Google play services outdated or not available",
-    //                 duration: Snackbar.LENGTH_SHORT,
-    //                 action: {
-    //                     text: 'Ok',
-    //                     textColor: 'green',
-    //                     onPress: () => { /* Do something. */ },
-    //                 },
-    //             });
-    //             // play services not available or outdated
-    //         } else {
-    //             Snackbar.show({
-    //                 text: error.message,
-    //                 duration: Snackbar.LENGTH_SHORT,
-    //                 action: {
-    //                     text: 'Ok',
-    //                     textColor: 'green',
-    //                     onPress: () => { /* Do something. */ },
-    //                 },
-    //             });
-    //             // some other error happened
-    //         }
-    //     }
-    // }
 
     return (
         <ImageBackground source={require("../../assets/Images/bgImg.png")} style={{ width: `100%`, height: `100%`, }} >

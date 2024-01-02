@@ -1,16 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { Text } from 'react-native-paper'
-import { FlatList, View } from 'react-native'
-import Video from 'react-native-video';
-import VideoPlayer from 'react-native-video-controls';
-import video from '../../assets/mBaWAJWaFaTob9jZ.mp4';
+import { Button, Text } from 'react-native-paper'
+import { FlatList, RefreshControl, View } from 'react-native'
+// import Video from 'react-native-video';
+// import VideoPlayer from 'react-native-video-controls';
+// import video from '../../assets/mBaWAJWaFaTob9jZ.mp4';
 import firestore from '@react-native-firebase/firestore';
-import PostCards from '../PostCard/PostCard';
-
-
+import PostCards from '../../Components/PostCard/PostCard';
+// import { useNavigation } from '@react-navigation/native';
 
 
 function Posts() {
+
+    const [refreshing, setRefreshing] = useState(false);
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        getPosts()
+    }, [refreshing]);
+
+
     useEffect(() => {
         getPosts()
     }, [])
@@ -27,6 +34,7 @@ function Posts() {
         const fitlerData = allPosts?._docs?.filter((post) => post?._data.imgType !== "image/png" && post?._data.imgType !== undefined)
         console.log(fitlerData?._data)
         setData(fitlerData)
+        setRefreshing(false)
     }
     return (
         <View>
@@ -41,6 +49,7 @@ function Posts() {
                     <FlatList
                         data={data}
                         keyExtractor={(item, index) => item.id} // Assuming you have an 'id' field in your data
+                        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                         renderItem={({ item }) =>
                         (
                             <PostCards
@@ -54,10 +63,10 @@ function Posts() {
 
                 ) : (
                     <View style={{ alignItems: "center", justifyContent: "center", height: `95%` }}>
-
-                        <Text style={{ fontSize: 20 }}>
+                        <Text style={{ fontSize: 20 }} >
                             No Posts Available
                         </Text>
+
                     </View>
                 )}
 

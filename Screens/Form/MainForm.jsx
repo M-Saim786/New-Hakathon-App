@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { View, Dimensions, ScrollView, StyleSheet, KeyboardAvoidingView } from 'react-native'
+import React, { useState } from 'react'
+import { View, Dimensions, ScrollView, StyleSheet } from 'react-native'
 import { Avatar, Badge, Button, Text, TextInput, Modal, Portal, PaperProvider, RadioButton } from 'react-native-paper'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
-import SelectDropdown from 'react-native-select-dropdown'
+// import SelectDropdown from 'react-native-select-dropdown'
 import Snackbar from 'react-native-snackbar'
 import firestore from "@react-native-firebase/firestore"
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -30,23 +30,13 @@ function MainForm({ navigation, type }) {
         { label: 'Female', value: 'feMale' },
 
     ])
-    // const itemId = itemId;
-    // const { itemId } = route.params;
-    // const [secureText, setsecureText] = useState(true)
     const [Name, setName] = useState("")
     const [Cnic, setCnic] = useState(null)
     const [PhoneNum, setPhoneNum] = useState(null)
     const [ImgFile, setImgFile] = useState(null)
 
-    // const [Email, setEmail] = useState("")
-    // const [Password, setPassword] = useState("")
-    const [Title, setTitle] = useState("")
-    const [Desc, setDesc] = useState("")
     // const [, set] = useState(second)
     const [loading, setloading] = useState(false)
-    // const [secureText, setsecureText] = useState(true)
-    // const [Profile, setProfile] = useState([])
-    // const [UserId, setUserId] = useState("")
     const [ShowProgress, setShowProgress] = useState(false)
     const [ProgressVal, setProgressVal] = useState(10)
     const OpenGallery = async () => {
@@ -197,14 +187,8 @@ function MainForm({ navigation, type }) {
 
     // Modal Data
     const [visible, setVisible] = React.useState(false);
-    // const [value, setValue] = React.useState('');
-    // if (value) {
-    //     setVisible(false)
-    // }
-    // console.log(value)
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
-    // const containerStyle = 
     const handleChoice = (text) => {
         setVisible(false)
         if (text == "camera") {
@@ -238,7 +222,6 @@ function MainForm({ navigation, type }) {
                         </View>
                     </View>
 
-
                     <View>
                         <View style={styles.avatar}>
                             <Avatar.Image
@@ -250,7 +233,6 @@ function MainForm({ navigation, type }) {
                                 style={{
                                     resizeMode: 'contain',
                                     // marginLeft:`50%` 
-
                                 }}
                             />
                             <Badge size={30} style={{
@@ -275,7 +257,6 @@ function MainForm({ navigation, type }) {
                                     </Modal>
                                 </Portal>
                             </PaperProvider>
-
                         </View>
                         <View>
 
@@ -379,13 +360,11 @@ const styles = StyleSheet.create({
     },
     mainDiv: {
         padding: 10,
-        // position
         // borderBlockColor: "black",
         // borderWidth: 1
     },
     avatar: {
         margin: 30,
-        // padding: 0,
         // borderBlockColor: "black",
         // borderWidth: 1,
         textAlign: "center",
@@ -395,4 +374,3 @@ const styles = StyleSheet.create({
     },
     modal: { backgroundColor: 'white', width: 170, height: 100, zIndex: 2, borderRadius: 10, elevation: 3, }
 })
-

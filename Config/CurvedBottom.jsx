@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 import { CurvedBottomBarExpo } from 'react-native-curved-bottom-bar';
 import Ionicons from "react-native-vector-icons/AntDesign";
-import Home from '../Components/Home/Home';
-// import About from '../Components/About';
-import Setting from '../Components/Settings/Setting';
-import Profile from '../Components/Profile/Profile';
+import Home from '../Screens/Home/Home';
+// import About from '../Screens/About';
+import Setting from '../Screens/Settings/Setting';
+import Profile from '../Screens/Profile/Profile';
 // import BottomModal from './BottomModal';
 import RBSheet from "react-native-raw-bottom-sheet";
 import { RadioButton } from 'react-native-paper';
-import Posts from '../Components/Posts/Posts';
+import Posts from '../Screens/Posts/Posts';
 
 export default function BottomNav({ navigation }) {
     const _renderIcon = (routeName, selectedTab) => {
