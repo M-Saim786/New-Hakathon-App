@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Text } from 'react-native-paper'
+import { ActivityIndicator, Button, Text } from 'react-native-paper'
 import { FlatList, RefreshControl, View } from 'react-native'
 // import Video from 'react-native-video';
 // import VideoPlayer from 'react-native-video-controls';
@@ -39,34 +39,38 @@ function Posts() {
     return (
         <View>
             <View style={{
-                height: `95%`,
+                height: `100%`,
+                paddingBottom: 40,
                 // borderBlockColor: "blue", borderWidth: 1
                 display: "flex"
             }}>
 
 
                 {data && data.length > 0 ? (
-                    <FlatList
-                        data={data}
-                        keyExtractor={(item, index) => item.id} // Assuming you have an 'id' field in your data
-                        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-                        renderItem={({ item }) =>
-                        (
-                            <PostCards
-                                title={item?._data?.title}
-                                desc={item?._data?.desc}
-                                videoUrl={item?._data?.postUrl}
-                            // key={}
-                            />
-                        )}
-                    />
-
+                    <>
+                        <FlatList
+                            data={data}
+                            keyExtractor={(item, index) => item.id} // Assuming you have an 'id' field in your data
+                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                            renderItem={({ item }) =>
+                            (
+                                <PostCards
+                                    title={item?._data?.title}
+                                    desc={item?._data?.desc}
+                                    videoUrl={item?._data?.postUrl}
+                                // key={}
+                                />
+                            )}
+                        />
+                        <View style={{ height: 10 }}>
+                        </View>
+                    </>
                 ) : (
                     <View style={{ alignItems: "center", justifyContent: "center", height: `95%` }}>
-                        <Text style={{ fontSize: 20 }} >
-                            No Posts Available
+                        <Text style={{ fontSize: 20, marginBottom: 20, fontFamily: "Quicksand-Medium" }} >
+                            Loading...!
                         </Text>
-
+                        <ActivityIndicator animating={true} color={"#8CC540"} size="large" />
                     </View>
                 )}
 

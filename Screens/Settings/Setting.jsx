@@ -52,13 +52,20 @@ function Setting({ navigation }) {
         // console.log("About._docs", About._docs[0]._data)
     }
     const [showTable, setshowTable] = useState(false)
+    const [ShowAbout, setShowAbout] = useState(false)
     const gotoSettingDetail = (name) => {
         // console.log("lcikde")
         setshowDetail(true)
         const filter = combinedData.filter((item) => item.name === name)
         // console.log("daa", filter[0].name);
         if (filter[0].name == "All Requests") {
+            setfiterDetails(filter)
             setshowTable(true)
+        }
+        else if (filter[0].name == "About Saylani") {
+            setShowAbout(true)
+            setfiterDetails(filter)
+
         }
         else {
             setfiterDetails(filter)
@@ -87,7 +94,7 @@ function Setting({ navigation }) {
             // borderWidth: 1,
             height: `90%`,
             display: "flex",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
         }}>
             {!showDetail &&
                 <View >
@@ -110,13 +117,16 @@ function Setting({ navigation }) {
                                             </Text>
                                         </View>
                                         <View >
-                                            <Icon name="chevron-right" size={25} />
+                                            <Icon name="chevron-right" size={25} color="gray" />
                                         </View>
                                     </View>
                                 </Pressable>
                             )
                         }) : <>
                             <View style={{ marginTop: 30 }}>
+                                <Text style={{ fontSize: 20, marginBottom: 20, fontFamily: "Quicksand-Medium", textAlign: "center" }} >
+                                    Loading...!
+                                </Text>
                                 <ActivityIndicator animating={true} color={"#8CC540"} size="large" />
                             </View>
                         </>
@@ -149,6 +159,7 @@ function Setting({ navigation }) {
                         myRequest={myRequest}
                         navigation={navigation}
                         showTable={showTable}
+                        ShowAbout={ShowAbout}
                     />}
             </ScrollView>
         </View>

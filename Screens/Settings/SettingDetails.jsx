@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { Image, View } from 'react-native'
 import { DataTable, Text } from 'react-native-paper'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 // import DetailsCard from './DetailsCard'
 
 
-function SettingDetails({ navigation, details, myRequest, showTable }) {
+function SettingDetails({ navigation, details, myRequest, showTable, ShowAbout }) {
 
+    console.log("ShowAbout", ShowAbout)
     return (
         <View style={{ padding: 10, }}>
             <View style={{
@@ -15,6 +16,7 @@ function SettingDetails({ navigation, details, myRequest, showTable }) {
                 justifyContent: "center",
 
             }}>
+
                 <View style={{ textAlign: "center" }}>
                     <Text style={{ fontSize: 25, fontFamily: "Quicksand-Bold" }}>
                         {details[0]?.name}
@@ -24,6 +26,12 @@ function SettingDetails({ navigation, details, myRequest, showTable }) {
                     <Icon color="#E75C62" name='close' style={{ fontSize: 25, }} onPress={() => navigation.navigate("Settings")} />
                 </View>
             </View>
+
+            {ShowAbout && (<View>
+                <Image source={require("../../assets/Images/chairman.jpg")} style={{ height: 300, width: `100%`, marginTop: 20 }} />
+            </View>
+            )}
+
 
             {details?.length > 0 && (<View>
                 <Text style={{ marginLeft: 15, marginTop: 30, fontFamily: "Quicksand-Medium", lineHeight: 20 }}>

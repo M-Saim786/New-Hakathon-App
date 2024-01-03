@@ -34,7 +34,7 @@ function MainForm({ navigation, type }) {
     const [Cnic, setCnic] = useState(null)
     const [PhoneNum, setPhoneNum] = useState(null)
     const [ImgFile, setImgFile] = useState(null)
-
+    const [amount, setAmount] = useState(10)
     // const [, set] = useState(second)
     const [loading, setloading] = useState(false)
     const [ShowProgress, setShowProgress] = useState(false)
@@ -131,7 +131,14 @@ function MainForm({ navigation, type }) {
     const addRequest = async () => {
         const userId = await AsyncStorage.getItem("userId")
         console.log(ImgFile)
-        if (!Name || !Cnic || !PhoneNum || !gender || !items) {
+        console.log(value)
+        console.log(amount)
+        console.log(gender)
+        console.log(PhoneNum)
+        console.log(Cnic)
+        console.log(Name)
+        if (!Name || !Cnic || !PhoneNum || !gender || !value || !amount) {
+            // if (!Name || !Cnic || !PhoneNum || !gender || !value || (value == "money" && amount !== null )) {
             Snackbar.show({
                 text: 'Required Fields cannot be Null..',
                 duration: Snackbar.LENGTH_SHORT,
@@ -157,7 +164,7 @@ function MainForm({ navigation, type }) {
                 Cnic: Cnic,
                 gender: gender,
                 mainType: value,
-
+                amount: value == "money " && amount
             }).then(() => {
                 Snackbar.show({
                     text: 'Request Submitted Successfully..!',
@@ -326,13 +333,32 @@ function MainForm({ navigation, type }) {
                                     />
                                 </View>
                             </View>
+                            {value === "money" && (<TextInput
+                                label="Amount"
+                                mode='outlined'
+                                placeholder='Add Amount...'
+                                value={amount}
+                                onChangeText={text => {
+                                    if (text >= 11) {
+                                        setAmount(text);
+                                    }
+                                }}
+                                right={<TextInput.Icon icon="currency-rupee" />}
+                                style={{ marginTop: 10, }}
+                                keyboardType='numeric'
+                            />)}
+
                         </View>
 
 
                         <View>
                             <Button
                                 icon="hand-heart-outline" mode="contained"
-                                style={{ marginTop: 110, color: "white", backgroundColor: "#0574B9", borderRadius: 5 }}
+                                style={{
+                                    marginTop: 100,
+                                    marginBottom: 20,
+                                    color: "white", backgroundColor: "#0574B9", borderRadius: 5
+                                }}
                                 loading={loading ? true : false}
                                 onPress={() => addRequest()}
                             >

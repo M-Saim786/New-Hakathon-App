@@ -151,14 +151,15 @@ const styles = StyleSheet.create({
         alignItems: "flex-end",
     },
     PostHeaderImg: {
-        width: 60,
-        height: 60,
+        width: 50,
+        height: 50,
         borderRadius: 50,
+        marginRight: 10
         // borderBlockColor: "black",
         // borderWidth: 1
     },
     heading: {
-        fontSize: 25,
+        fontSize: 20,
         fontFamily: "Quicksand-Medium",
         marginTop: 10,
         padding: 10
@@ -166,7 +167,8 @@ const styles = StyleSheet.create({
     desc: {
         fontSize: 14,
         fontFamily: "Quicksand-Medium",
-        paddingLeft: 10
+        paddingLeft: 10,
+        marginBottom: 10
     },
     bottomBar: {
         flexDirection: "row",

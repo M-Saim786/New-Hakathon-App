@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FlatList, View, RefreshControl } from 'react-native'
-import { Text } from 'react-native-paper'
+import { ActivityIndicator, Text } from 'react-native-paper'
 import PostCards from '../../Components/PostCard/PostCard'
 import firestore from '@react-native-firebase/firestore';
 
@@ -37,29 +37,38 @@ function Home() {
 
         <View style={{ padding: 2, backgroundColor: "#e6ede9", }}>
             <View style={{
-                height: `95%`,
-                // borderBlockColor: "blue", borderWidth: 1
+                height: `100%`,
+                paddingBottom: 40,
+                // borderBlockColor: "blue", borderWidth: 1,
+                // marginBottom: -20
             }}>
 
                 {
                     data && data.length > 0 ?
-                        (<FlatList
-                            data={data}
-                            keyExtractor={(item, index) => item.id} // Assuming you have an 'id' field in your data
-                            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-                            renderItem={({ item }) =>
-                            (
-                                <PostCards
-                                    title={item?._data?.title}
-                                    desc={item?._data?.desc}
-                                    img={item?._data?.postUrl} />
-                            )}
-                        />) : (
+                        (
+                            <>
+                                <FlatList
+                                    data={data}
+                                    keyExtractor={(item, index) => item.id} // Assuming you have an 'id' field in your data
+                                    refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+                                    renderItem={({ item }) =>
+                                    (
+                                        <PostCards
+                                            title={item?._data?.title}
+                                            desc={item?._data?.desc}
+                                            img={item?._data?.postUrl} />
+                                    )}
+                                />
+                                <View style={{ height: 10 }}>
+                                </View>
+                            </>
+                        ) : (
 
                             <View style={{ alignItems: "center", justifyContent: "center", height: `95%` }}>
-                                <Text style={{ fontSize: 20 }}>
-                                    No Posts Available
+                                <Text style={{ fontSize: 20, marginBottom: 20, fontFamily: "Quicksand-Medium" }}>
+                                    Loading...!
                                 </Text>
+                                <ActivityIndicator animating={true} color={"#8CC540"} size="large" />
                             </View>
                         )
                 }
